@@ -131,7 +131,7 @@ def main():
             if (disc_idx <= 75):
                 print ("GOOD")
                 GPIO.output(GOOD_LED_PIN, GPIO.HIGH)
-            elif (75 < disc_idx && disc_idx < 85):
+            elif (75 < disc_idx and disc_idx < 85):
                 print ("NORMAL")
                 GPIO.output(NORMAL_LED_PIN, GPIO.HIGH)
             else:

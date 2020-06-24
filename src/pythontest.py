@@ -11,8 +11,9 @@
 import RPi.GPIO as GPIO
 import time
 
-# set GPIO 0 as LED pin
-LEDPIN = 17
+# set GPIO 0 and GPIO 1 as LED pin
+LEDPIN  = 17
+LEDPIN2 = 18
 
 #print message at the begining ---custom function
 def print_message():
@@ -36,6 +37,7 @@ def setup():
     GPIO.setmode(GPIO.BCM)
     #set LEDPIN's mode to output,and initial level to LOW(0V)
     GPIO.setup(LEDPIN,GPIO.OUT,initial=GPIO.LOW)
+    GPIO.setup(LEDPIN2,GPIO.OUT,initial=GPIO.LOW)
 
 #main function
 def main():
@@ -43,10 +45,12 @@ def main():
     print_message()
     while True:
        GPIO.output(LEDPIN,GPIO.HIGH)
+       GPIO.output(LEDPIN2,GPIO.HIGH)
        print('...LED ON\n')
        time.sleep(0.5)
        
        GPIO.output(LEDPIN,GPIO.LOW)
+       GPIO.output(LEDPIN2,GPIO.LOW)
        print('LED OFF...\n')
        time.sleep(0.5)
        pass
@@ -56,6 +60,7 @@ def main():
 def destroy():
     #turn off LED
     GPIO.output(LEDPIN,GPIO.LOW)
+    GPIO.output(LEDPIN2,GPIO.LOW)
     #release resource
     GPIO.cleanup()
 #

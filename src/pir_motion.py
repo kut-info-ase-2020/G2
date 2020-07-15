@@ -19,6 +19,7 @@ def setup():
 
 def main():
 	while True:
+		sleep(1)
 		#when motion detected turn on LED
 		input = GPIO.input(PIR_input)
 		print(input)

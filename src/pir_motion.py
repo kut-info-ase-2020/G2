@@ -4,8 +4,8 @@
 '''
 import RPi.GPIO as GPIO
 
-PIR_input = 29				#read PIR Output
-LED = 32				#LED for signalling motion detected	
+PIR_input = 17				#read PIR Output
+LED = 18				#LED for signalling motion detected	
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)		#choose pin no. system
 GPIO.setup(PIR_input, GPIO.IN)	

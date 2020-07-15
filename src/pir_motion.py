@@ -3,7 +3,7 @@
 	http://www.electronicwings.com
 '''
 import RPi.GPIO as GPIO
-
+import time
 PIR_input = 17				#read PIR Output
 LED = 18
 				#LED for signalling motion detected	
@@ -19,7 +19,7 @@ def setup():
 
 def main():
 	while True:
-		sleep(1)
+		time.sleep(1)
 		#when motion detected turn on LED
 		input = GPIO.input(PIR_input)
 		print(input)

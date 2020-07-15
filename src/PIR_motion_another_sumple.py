@@ -36,7 +36,9 @@ def main():
     print_message()
     while True:
         #read Sw520dPin's level
-        if(GPIO.input(PIRPin)!=0):
+	input = GPIO.input(PIRPin)
+	print(input)
+        if(input != 0):
             GPIO.output(BuzzerPin,GPIO.LOW)
             #time.sleep(0.5)
             print ('********************')

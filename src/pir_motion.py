@@ -9,6 +9,9 @@ LED = 18
 				#LED for signalling motion detected	
 def setup():
 	GPIO.setwarnings(False)
+	#set the gpio modes to BCM numbering
+    	GPIO.setmode(GPIO.BCM)
+	GPIO.setwarnings(False)
 	GPIO.setmode(GPIO.BOARD)		#choose pin no. system
 	GPIO.setup(PIR_input, GPIO.IN)	
 	GPIO.setup(LED, GPIO.OUT)

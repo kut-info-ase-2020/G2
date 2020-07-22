@@ -19,7 +19,7 @@ def main():
         #when motion detected turn on LED
         input = GPIO.input(leed_input)
         print(input)
-        if(!input):
+        if(not input):
             GPIO.output(LED, GPIO.HIGH)
         else:
             GPIO.output(LED, GPIO.LOW)

@@ -2,9 +2,9 @@ import RPi.GPIO as GPIO
 import time
 
 # set BCM_GPIO 17(wPi#0) as PIR pin
-PIRPin = 17
+PIRPin = 16
 # set BCM_GPIO 18(wPi#1) as buzzer pin
-BuzzerPin = 23
+BuzzerPin = 26
 
 #print message at the begining ---custom function
 def print_message():

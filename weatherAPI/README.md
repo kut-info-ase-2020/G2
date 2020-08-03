@@ -20,4 +20,5 @@ Dockerfileを参照
 docker built -t ubuntu_python
 
 コンテナの起動 カレントディレクトリをマウントする
+
 docker run -it -v $(pwd):/workspace ubuntu_python

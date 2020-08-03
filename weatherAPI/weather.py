@@ -63,5 +63,5 @@ class Weather:
         elif mode_name == "Location":
             self.mode = 1
         else:
-            return "Please set PlaseName or Location"
+            return "Please set PlaceName or Location"
     

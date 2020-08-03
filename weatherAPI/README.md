@@ -15,6 +15,14 @@ python 3.6
 Dockerfileを参照 
 
 ## Docker用コマンド
-docker built -t ubuntu_python
+**イメージの作成**
 
-docker run -it -v $(pwd):/workspace ubuntu_python
+`docker built -t ubuntu_python`
+
+**コンテナの起動** カレントディレクトリをマウントする
+
+`docker run -it -v $(pwd):/workspace --name weatherapi ubuntu_python`
+
+**起動中コンテナ(weatherapi)のターミナルにアクセス**
+
+`docker attach weatherapi`

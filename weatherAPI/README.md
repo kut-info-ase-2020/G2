@@ -13,3 +13,8 @@ ubuntu 18.04
 python 3.6
 
 Dockerfileを参照 
+
+## Docker用コマンド
+docker built -t ubuntu_python
+
+docker run -it -v $(pwd):/workspace ubuntu_python

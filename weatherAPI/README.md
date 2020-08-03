@@ -15,6 +15,9 @@ python 3.6
 Dockerfileを参照 
 
 ## Docker用コマンド
+イメージの作成
+
 docker built -t ubuntu_python
 
+コンテナの起動 カレントディレクトリをマウントする
 docker run -it -v $(pwd):/workspace ubuntu_python

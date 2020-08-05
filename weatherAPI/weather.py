@@ -34,7 +34,7 @@ class Weather:
             return True
         return False
 
-    def set_plase(self, place_name):
+    def set_placename(self, place_name):
         api = "http://api.openweathermap.org/data/2.5/weather?units={units}&q={city}&APPID={key}"
         url = api.format(units = self.units, city = place_name, key = self.API_KEY)
 
@@ -50,12 +50,17 @@ class Weather:
         url = api.format(units = self.units, lon = lon, lat = lat, key = self.API_KEY)
 
         res = requests.get(url)
-        if res.status_code == 200:
-            self.lon = lon
-            self.lat = lat
-            return "OK, changed it!"
-        else:
-            return "The place name is not correct!"
+        if type(lon) is not int or type(lat) is not int:
+            return "Please set integer value."
+        else: 
+            if lon < -180 or 180 < lon or lat < -90 or 90 < lat:
+                return "Please set longitude, latitude! (-180 < longitude < 180, -90 < latitude < 90)"
+            if res.status_code == 200:
+                self.lon = lon
+                self.lat = lat
+                return "OK, changed it!"
+            else:
+                return "The place name is not correct!"
 
     def change_mode(self, mode_name):
         if mode_name == "PlaceName":

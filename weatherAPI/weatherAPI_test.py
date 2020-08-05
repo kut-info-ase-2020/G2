@@ -2,7 +2,7 @@ import requests
 import json
 import os
 
-city_name = "Chuncheon, KR"
+city_name = "efawegawgawgewgawe"#"Chuncheon, KR"
 API_KEY = os.environ['weatherapi_key']
 lon, lat = 141, 43 #longitude, latitude 経度 経度
 part = "minutely"

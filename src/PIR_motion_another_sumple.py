@@ -34,11 +34,19 @@ def setup():
 def main():
 #print info
     print_message()
+
+    pir_flag = 0
+    nalarm_count = 0
+
     while True:
         #read Sw520dPin's level
 	input = GPIO.input(PIRPin)
 	print(input)
         if(input != 0):
+            if(pir_flag == 0):
+                alarm = time.time()
+            nalarm_count = 0
+            pir_flag = 1
             GPIO.output(BuzzerPin,GPIO.LOW)
             #time.sleep(0.5)
             print ('********************')
@@ -47,6 +55,11 @@ def main():
             print ('\n')
             time.sleep(1)
         else:
+            nalarm_count += 1
+            if(nalarm > 60):
+                sitting_time = time.time() - alarm
+                print("sitting_time:{0}".format(sitting_time)+"[sec]")
+                pir_flag = 0
             GPIO.output(BuzzerPin,GPIO.HIGH)
             print ('====================')
             print ('=     Not alarm...  =')

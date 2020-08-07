@@ -5,7 +5,7 @@ import os
 class Weather:
     def __init__(self):
         self.mode = 0
-        self.place = "Kochi,jp"
+        self.place_name = "Kochi,jp"
         self.lon, self.lat = 133, 33 #longitude, latitude 経度 経度
         self.part = "minutely"
         self.units = "metric"
@@ -14,7 +14,7 @@ class Weather:
     def get_weather(self):
         if self.mode == 0:
             api = "http://api.openweathermap.org/data/2.5/weather?units={units}&q={city}&APPID={key}"
-            url = api.format(units = self.units, city = self.place, key = self.API_KEY)
+            url = api.format(units = self.units, city = self.place_name, key = self.API_KEY)
         else:
             api = "http://api.openweathermap.org/data/2.5/weather?units={units}&lat={lat}&lon={lon}&APPID={key}"
             url = api.format(units = self.units, lon = self.lon, lat = self.lat, key = self.API_KEY)
@@ -32,7 +32,8 @@ class Weather:
         weather = self.get_weather()
         if weather == "Rain":
             return True
-        return False
+        else:
+            return False
 
     def set_placename(self, place_name):
         api = "http://api.openweathermap.org/data/2.5/weather?units={units}&q={city}&APPID={key}"
@@ -40,10 +41,10 @@ class Weather:
 
         res = requests.get(url)
         if res.status_code == 200:
-            self.place = place_name
-            return "OK, changed it!"
+            self.place_name = place_name
+            return "OK, changed the place name to " + self.place_name + "!"
         else:
-            return "The name is not correct!"
+            return "The place name is not correct!"
 
     def set_location(self, lon, lat):
         api = "http://api.openweathermap.org/data/2.5/weather?units={units}&lat={lat}&lon={lon}&APPID={key}"
@@ -65,8 +66,16 @@ class Weather:
     def change_mode(self, mode_name):
         if mode_name == "PlaceName":
             self.mode = 0
+            return "Change PlaceName Mode"
         elif mode_name == "Location":
             self.mode = 1
+            return "Change Location Mode"
         else:
             return "Please set PlaceName or Location"
+
+    def get_placenamme(self):
+        return self.place_name
+    
+    def get_location(self):
+        return {"longitude": self.lon, "latitude": self.lat}
     

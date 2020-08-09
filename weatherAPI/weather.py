@@ -51,25 +51,23 @@ class Weather:
         url = api.format(units = self.units, lon = lon, lat = lat, key = self.API_KEY)
 
         res = requests.get(url)
-        if type(lon) is not int or type(lat) is not int:
-            return "Please set integer value."
-        else: 
-            if lon < -180 or 180 < lon or lat < -90 or 90 < lat:
-                return "Please set longitude, latitude! (-180 < longitude < 180, -90 < latitude < 90)"
-            if res.status_code == 200:
-                self.lon = lon
-                self.lat = lat
-                return "OK, changed it!"
-            else:
-                return "The place name is not correct!"
+
+        if lon < -180 or 180 < lon or lat < -90 or 90 < lat:
+            return "Please set longitude, latitude! (-180 < longitude < 180, -90 < latitude < 90)"
+        if res.status_code == 200:
+            self.lon = lon
+            self.lat = lat
+            return "OK, changed the location to longitude = " + str(self.lon) + ", latitude = " + str(self.lat) + "!"
+        else:
+            return "The location is not correct!"
 
     def change_mode(self, mode_name):
         if mode_name == "PlaceName":
             self.mode = 0
-            return "Change PlaceName Mode"
+            return "Change to PlaceName Mode"
         elif mode_name == "Location":
             self.mode = 1
-            return "Change Location Mode"
+            return "Change to Location Mode"
         else:
             return "Please set PlaceName or Location"
 

@@ -31,3 +31,4 @@ print(x.shape)
 print(x[1,1])
 
 Slack.Visualization_Sitting(x)
+Slack.Visualization_Ventilation(x)

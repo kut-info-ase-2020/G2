@@ -1,8 +1,9 @@
 import os
 import slack
+import numpy as np
 from slack import WebClient
 import requests
-import matplotlib
+import matplotlib.pyplot as plt
 from slack.errors import SlackApiError
 
 class SlackAPI:
@@ -33,7 +34,7 @@ class SlackAPI:
         except SlackApiError as e:
         # You will get a SlackApiError if "ok" is False
             assert e.response["error"]
-    def Notification_PIR(self,time):
+    def Notification_Sitting(self,time):
         try:
             print("PIR notification message create...")
             message = "椅子に座りすぎです！椅子から立ち、軽い運動を試みてください！\n連続で座っていた時間 = " + str(time) + "分"
@@ -71,4 +72,35 @@ class SlackAPI:
             requests.post(url, data=data, files=image)
         except SlackApiError as e:
         # You will get a SlackApiError if "ok" is False
-            assert e.response["error"]    
+            assert e.response["error"]
+
+    def Visualization_Sitting(self,array):
+        size = array.shape[0]
+        #blue
+        col1 = np.array([0.0,156/255,209/255])
+        #yellow
+        col2 = np.array([255/255,217/255,0.0])
+        #label
+        st = ["Standing","Sitting"]
+        colorlist = np.zeros((size,3),np.float64)
+        label_list = []
+        #create label and color list
+        for w in range(size):
+            if array[w,1] == 0:
+                colorlist[w,:] = col1[:]
+                label_list.append(st[0])
+            else:
+                colorlist[w,:] = col2[:]
+                label_list.append(st[1])
+        #create Graph
+        plt.pie(array[:,0], labels=label_list,colors = colorlist,startangle=90,counterclock=False)
+        label_time = ["AM","PM"]
+        x_time = np.array([100 , 100])
+        colorlist_time = ["pink","magenta"]
+        plt.pie(x_time, labels=label_time,colors = colorlist_time,startangle=90,counterclock=False,radius = 0.7,labeldistance=0.5)
+        centre_circle = plt.Circle((0,0),0.6,color='black', fc='white',linewidth=1.25)
+        fig = plt.gcf()
+        fig.gca().add_artist(centre_circle)
+        print("Graph created!")
+        #save graph
+        fig.savefig("Sitting_Graph_test.png")

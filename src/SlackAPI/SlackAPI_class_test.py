@@ -1,5 +1,6 @@
 import os
 import slack
+import numpy as np
 from slack import WebClient
 import requests
 import matplotlib
@@ -22,5 +23,11 @@ text = "you must stand up!"
 a = 1
 b = 2
 Slack.Notification_Heatstroke(a,b)
-Slack.Notification_PIR(b)
+Slack.Notification_Sitting(b)
 Slack.Notification_Ventilation(b)
+
+x = np.array([[1000,0],[150,1],[250 , 0],[350,1],[200,0],[50,1], [400,0]])
+print(x.shape)
+print(x[1,1])
+
+Slack.Visualization_Sitting(x)

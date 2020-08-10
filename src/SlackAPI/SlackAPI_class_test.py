@@ -21,4 +21,6 @@ sensor_type = "PIR"
 text = "you must stand up!"
 a = 1
 b = 2
-Slack.Notification_WBGT(a,b)
+Slack.Notification_Heatstroke(a,b)
+Slack.Notification_PIR(b)
+Slack.Notification_Ventilation(b)

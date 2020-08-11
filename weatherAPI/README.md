@@ -1,5 +1,17 @@
-# 換気機能で用いるWeatherAPI
-## 試すAPI
+# 換気機能で用いるWeatherAPIによる天気の判定を行うクラス
+換気通知機能に用いる天気の判定を行うWeatherクラス(weather.py)
+API Keyは環境変数weatherapi_keyに設定する
+
+#### 他プログラムの用途
+Requestsライブラリのテスト request_test.py
+
+APIのテスト weatherAPI_test.py
+
+Weatherクラスの動作テスト test_weather.py
+
+Weatherクラスの単体テスト unittest_weather.py
+
+## 使用API
 
 ### Open WeatherAPI
 

@@ -1,3 +1,5 @@
+import time
+from collections import namedtuple
 from sensor import Sensor
 import RPi.GPIO as GPIO
 
@@ -6,13 +8,13 @@ class ReedSwitch(Sensor):
     mfstatus = MFStatus(strong=0, weak=1) # 暫定
     switch_port = -1
 
-    def setup(self, *, port):
+    def setup(self, port):
         super().setup(ports=[port], port_settings=[super().INPUT])
         ReedSwitch.switch_port = port
 
-    def read():
-        read_val = super().read(switch_port)
-        if (read_val == mfstatus.strong):
+    def read(self):
+        read_val = super().read(ReedSwitch.switch_port)
+        if (read_val == ReedSwitch.mfstatus.strong):
             return 1
         return 0
 
@@ -23,11 +25,11 @@ class ReedSwitch(Sensor):
             input = self.read()
             print("reed switch input:", input)
 
-    def destroy():
+    def destroy(self):
         GPIO.cleanup()
 
     def __init__(self, port):
-        setup(port)
+        self.setup(port)
 
 if __name__ == '__main__':
     reed_switch = ReedSwitch.setup(port=26)

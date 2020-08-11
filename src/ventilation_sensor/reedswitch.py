@@ -24,6 +24,10 @@ class ReedSwitch(Sensor):
             #when motion detected turn on LED
             input = self.read()
             print("reed switch input:", input)
+            if input == ReedSwitch.mfstatus.strong:
+                print("strong magnetic force")
+            else:
+                print("weak magnetic force")
 
     def destroy(self):
         GPIO.cleanup()

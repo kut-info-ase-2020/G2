@@ -24,7 +24,7 @@ class ReedSwitch(Sensor):
             #when motion detected turn on LED
             input = self.read()
             print("reed switch input:", input)
-            if input == ReedSwitch.mfstatus.strong:
+            if input == 1:
                 print("strong magnetic force")
             else:
                 print("weak magnetic force")
@@ -36,7 +36,7 @@ class ReedSwitch(Sensor):
         self.setup(port)
 
 if __name__ == '__main__':
-    reed_switch = ReedSwitch.setup(port=26)
+    reed_switch = ReedSwitch(port=26)
     try:
         reed_switch.main()
     except KeyboardInterrupt:

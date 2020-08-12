@@ -35,8 +35,8 @@ def main():
 #print info
     print_message()
 
-    pir_flag = 0 #人が座っているか示すフラグ
-    nalarm_count = 0 #人が座っていないときのカウント
+    pir_flag = 0
+    nalarm_count = 0
 
     while True:
         #read Sw520dPin's level
@@ -44,7 +44,7 @@ def main():
 	print(input)
         if(input != 0):
             if(pir_flag == 0):
-                alarm = time.time() #初めて人が座ったら計測開始
+                alarm = time.time()
             #nalarm_count = 0
             pir_flag = 1
             GPIO.output(BuzzerPin,GPIO.LOW)
@@ -55,7 +55,7 @@ def main():
             print ('\n')
             time.sleep(1)
         else:
-            now_time = time.time()-alarm #alarmから現在までの時間を取得
+            now_time = time.time()-alarm
             if(now_time < 60):
                 nalarm_count += 1
                 GPIO.output(BuzzerPin,GPIO.HIGH)

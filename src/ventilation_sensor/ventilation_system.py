@@ -16,8 +16,9 @@ class VentilationSystem:
         VentilationSystem.timer = WindowOpeningTimer()
         VentilationSystem.weather = Weatherinfo()
         VentilationSystem.ui = Slack()
-        VentilationSystem.timer.set_window_open_callback(self.warning)
-        VentilationSystem.timer.set_midnight_callback(self.periodical_report)
+        VentilationSystem.timer.set_time_over_callback(interval=30, func=self.warning)
+        VentilationSystem.timer.set_window_open_callback(func=self.resolved)
+        VentilationSystem.timer.set_period_callback(func=self.periodical_report)
         VentilationSystem.timer.start()
     
     def periodical_report(self, csv_data_path):
@@ -31,6 +32,10 @@ class VentilationSystem:
         if today == 'sunny' or today == 'cloudy':
             message = "Warning: sitting for long periods (" + str(hour) + " hr. " + str(minutes) + " min.)"
             VentilationSystem.ui.send_notification(message)
+
+    def resolved(self):
+        message = "Notification: window opened!"
+        VentilationSystem.ui.send_notification(message)
 
     def print_debug(self):
         VentilationSystem.timer.show_window_open_callback()

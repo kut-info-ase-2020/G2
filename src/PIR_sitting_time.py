@@ -37,6 +37,7 @@ def main():
 
     pir_flag = 0
     nalarm_count = 0
+    global alarm = 0
 
     while True:
         #read Sw520dPin's level

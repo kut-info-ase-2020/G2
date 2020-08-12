@@ -38,7 +38,7 @@ def main():
     pir_flag = 0
     nalarm_count = 0
     global alarm
-
+    alarm = time.time()
     while True:
         #read Sw520dPin's level
 	input = GPIO.input(PIRPin)

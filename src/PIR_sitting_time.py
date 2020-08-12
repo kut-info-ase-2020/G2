@@ -35,6 +35,10 @@ def main():
 #print info
     print_message()
 
+    with open('src/data/writer.csv', 'w') as f:
+        writer = csv.writer(f)
+        writer.writerow(["time", "0 or 1"])
+
     pir_flag = 0
     nalarm_count = 0
     global alarm
@@ -54,6 +58,10 @@ def main():
             print ('*     alarm!     *')
             print ('********************')
             print ('\n')
+            now1 = time.time()
+            with open('src/data/writer.csv', 'a') as f:
+                writer = csv.writer(f)
+                writer.writerow([now1, 1])
             time.sleep(1)
         else:
             now_time = time.time()- alarm
@@ -64,6 +72,10 @@ def main():
                 print ('=     Not alarm...  =')
                 print ('====================')
                 print ('\n')
+                now2 = time.time()
+                with open('src/data/writer.csv', 'a') as f:
+                    writer = csv.writer(f)
+                    writer.writerow([now2, 0])
                 time.sleep(1)
             else:
                 if(nalarm_count > 30):

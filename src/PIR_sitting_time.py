@@ -37,7 +37,7 @@ def main():
 
     pir_flag = 0
     nalarm_count = 0
-    global alarm = 0
+    global alarm
 
     while True:
         #read Sw520dPin's level
@@ -56,7 +56,7 @@ def main():
             print ('\n')
             time.sleep(1)
         else:
-            now_time = time.time()-alarm
+            now_time = time.time()- alarm
             if(now_time < 60):
                 nalarm_count += 1
                 GPIO.output(BuzzerPin,GPIO.HIGH)

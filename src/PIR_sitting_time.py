@@ -35,7 +35,7 @@ def main():
 #print info
     print_message()
 
-    with open('src/data/writer.csv', 'w') as f:
+    with open('/data/writer.csv', 'w') as f:
         writer = csv.writer(f)
         writer.writerow(["time", "0 or 1"])
 
@@ -59,7 +59,7 @@ def main():
             print ('********************')
             print ('\n')
             now1 = time.time()
-            with open('src/data/writer.csv', 'a') as f:
+            with open('/data/writer.csv', 'a') as f:
                 writer = csv.writer(f)
                 writer.writerow([now1, 1])
             time.sleep(1)
@@ -73,7 +73,7 @@ def main():
                 print ('====================')
                 print ('\n')
                 now2 = time.time()
-                with open('src/data/writer.csv', 'a') as f:
+                with open('/data/writer.csv', 'a') as f:
                     writer = csv.writer(f)
                     writer.writerow([now2, 0])
                 time.sleep(1)

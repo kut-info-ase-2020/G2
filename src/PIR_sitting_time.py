@@ -68,6 +68,7 @@ def main():
         else:
             now_time = datetime.datetime.now()
             elapsed_time = now_time - alarm
+            print("elapsed_time:"+str(elapsed_time))
             if(elapsed_time.seconds < 60):
                 nalarm_count += 1
                 print("nalarm_count:"+str(nalarm_count))

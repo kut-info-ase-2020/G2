@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
-import time
+#import time
+import datetime
 import csv
 
 # set BCM_GPIO 17(wPi#0) as PIR pin

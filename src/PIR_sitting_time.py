@@ -53,7 +53,7 @@ def main():
                 alarm = datetime.datetime.now()
             #nalarm_count = 0
             pir_flag = 1
-            print("pir_flag:"pir_flag)
+            print("pir_flag:",pir_flag)
             GPIO.output(BuzzerPin,GPIO.LOW)
             #time.sleep(0.5)
             print ('********************')

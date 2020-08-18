@@ -67,7 +67,7 @@ def main():
         else:
             now_time = datetime.datetime.now()
             elapsed_time = now_time - alarm
-            if(elapsed_time.minute < 1):
+            if(elapsed_time.seconds < 60):
                 nalarm_count += 1
                 GPIO.output(BuzzerPin,GPIO.HIGH)
                 print ('====================')

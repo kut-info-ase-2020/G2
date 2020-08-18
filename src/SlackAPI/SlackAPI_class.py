@@ -1,8 +1,11 @@
 import os
 import slack
 import numpy as np
+import pandas as pd
+import io
 from slack import WebClient
 import requests
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 from slack.errors import SlackApiError
 
@@ -49,7 +52,7 @@ class SlackAPI:
         except IndexError:
             print("エラー！引数に不正があります")
 
-    def Notification_Heatstroke(self,Temp,Hum):
+    def Notification_HeatStroke(self,Temp,Hum):
         try:
             print("Heatstroke notification message create...")
             message = "熱中症の危険があります！窓を開ける、エアコンを起動するなどの対策を行ってください！\n室温 = "+ str(Temp) + "度\n湿度 = " + str(Hum) + "度"
@@ -74,7 +77,9 @@ class SlackAPI:
         # You will get a SlackApiError if "ok" is False
             assert e.response["error"]
 
-    def Visualization_Sitting(self,array):
+    def Visualization_Sitting(self,path):
+        array = np.loadtxt(path)
+        print(array)
         size = array.shape[0]
         #blue
         col1 = np.array([0.0,156/255,209/255])
@@ -109,7 +114,8 @@ class SlackAPI:
         message = "昨日1日のあなたの座っていた時間の記録のグラフです！"
         self.Visualization_send(file_path,message)
 
-    def Visualization_Ventilation(self,array):
+    def Visualization_Ventilation(self,path):
+        array = np.loadtxt(path)
         size = array.shape[0]
         #green
         col1 = np.array([176/255,255/255,5/255])
@@ -143,5 +149,28 @@ class SlackAPI:
         fig.savefig(file_path)
         message = "昨日1日のあなたの家の窓の開閉の記録のグラフです！"
         self.Visualization_send(file_path,message)
+
+    def Visualization_HeatStroke(self,path):
+        df = pd.read_csv(path,parse_dates=[0])
+        # グラフ作成
+        plt.figure(figsize=(8,4))
+        plt.plot(df['date'], df['Temp'],color = "red",marker='D')
+        plt.plot(df['date'], df['Hum'],color = "cyan",marker = 'o')
+        plt.plot(df['date'], df['WBGT'],color = "black",marker='*')
+        plt.legend(['Temp','Humidity','WBGT'])
+        # ロケータで刻み幅を設定
+        xloc = mpl.dates.HourLocator(byhour=range(0,24,1))
+        plt.gca().xaxis.set_major_locator(xloc)
+        # 時刻のフォーマットを設定
+        xfmt = mpl.dates.DateFormatter("%H")
+        plt.gca().xaxis.set_major_formatter(xfmt)
+        print("HeatStroke Graph created!")
+        #save graph
+        file_path = "HeatStroke_Graph.png"
+        plt.savefig(file_path)
+        message = "昨日1日のあなたの家の気温、湿度、WBGTのグラフです！"
+        self.Visualization_send(file_path,message)
+
+
 
         

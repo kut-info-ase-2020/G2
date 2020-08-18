@@ -23,3 +23,22 @@ fig = plt.gcf()
 fig.gca().add_artist(centre_circle)
 print("Graph created!")
 fig.savefig("Sitting_Graph.png")
+
+
+plt.figure(figsize=(8,4))
+plt.plot(df['date'], df['Temp'],color = "red",marker='D')
+plt.plot(df['date'], df['Hum'],color = "cyan",marker = 'o')
+plt.plot(df['date'], df['WBGT'],color = "black",marker='*')
+plt.legend(['Temp','Humidity','WBGT'])
+# ロケータで刻み幅を設定
+xloc = mpl.dates.HourLocator(byhour=range(0,24,1))
+plt.gca().xaxis.set_major_locator(xloc)
+# 時刻のフォーマットを設定
+xfmt = mpl.dates.DateFormatter("%H")
+plt.gca().xaxis.set_major_formatter(xfmt)
+print("HeatStroke Graph created!")
+#save graph
+file_path = "HeatStroke_Graph.png"
+fig.savefig(file_path)
+message = "昨日1日のあなたの家の気温、湿度、WBGTのグラフです！"
+self.Visualization_send(file_path,message)

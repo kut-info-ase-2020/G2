@@ -70,7 +70,7 @@ def main():
             elapsed_time = now_time - alarm
             if(elapsed_time.seconds < 60):
                 nalarm_count += 1
-                print("nalarm_count:".format(nalarm_count))
+                print("nalarm_count:"+str(nalarm_count))
                 print("pir_flag:"+str(pir_flag))
                 GPIO.output(BuzzerPin,GPIO.HIGH)
                 print ('====================')

@@ -35,22 +35,21 @@ def setup():
 def main():
 #print info
     print_message()
-
-    with open('writer.csv', 'w') as f:
+    # Create CSV file
+    with open('sitting_time.csv', 'w') as f:
         writer = csv.writer(f)
-        writer.writerow(["time", "0 or 1"])
-
+        #writer.writerow(["time", "0 or 1"])
     pir_flag = 0
     nalarm_count = 0
     global alarm
-    alarm = time.time()
+    alarm = datetime.datetime.now()
     while True:
         #read Sw520dPin's level
 	input = GPIO.input(PIRPin)
 	print(input)
         if(input != 0):
             if(pir_flag == 0):
-                alarm = time.time()
+                alarm = datetime.datetime.now()
             #nalarm_count = 0
             pir_flag = 1
             GPIO.output(BuzzerPin,GPIO.LOW)
@@ -59,31 +58,32 @@ def main():
             print ('*     alarm!     *')
             print ('********************')
             print ('\n')
-            now1 = time.time()
+            now1 = datetime.datetime.now()
             with open('writer.csv', 'a') as f:
                 writer = csv.writer(f)
                 writer.writerow([now1, 1])
             time.sleep(1)
         else:
-            now_time = time.time()- alarm
-            if(now_time < 60):
+            now_time = datetime.datetime.now()
+            now_time = now_time.minite - alarm.minite
+            if(now_time != 0):
                 nalarm_count += 1
                 GPIO.output(BuzzerPin,GPIO.HIGH)
                 print ('====================')
                 print ('=     Not alarm...  =')
                 print ('====================')
                 print ('\n')
-                now2 = time.time()
+                now2 = datetime.datetime.now()
                 with open('writer.csv', 'a') as f:
                     writer = csv.writer(f)
                     writer.writerow([now2, 0])
                 time.sleep(1)
             else:
                 if(nalarm_count > 30):
-                    sitting_time = time.time() - alarm
-                    print("sitting_time:{0}".format(sitting_time)+"[sec]")
+                    sitting_time = datetime.datetime.now() - alarm
+                    print("sitting time:".format(sitting_time)+"[sec]")
                     pir_flag = 0
-                alarm = time.time()
+                alarm = datetime.datetime.now()
 #define a destroy function for clean up everything after the script finished
 def destroy():
     #turn off buzzer

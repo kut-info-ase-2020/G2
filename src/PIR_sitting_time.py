@@ -51,6 +51,7 @@ def main():
         if(input != 0):
             if(pir_flag == 0):
                 alarm = datetime.datetime.now()
+                nalarm_count = 0
             #nalarm_count = 0
             pir_flag = 1
             print("pir_flag:"+str(pir_flag))

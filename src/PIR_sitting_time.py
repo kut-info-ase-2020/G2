@@ -86,10 +86,11 @@ def main():
             else:
                 if(nalarm_count > 30):
                     sitting_time = datetime.datetime.now() - alarm
-                    print("sitting time:".format(sitting_time)+"[sec]")
+                    print("sitting time:"+str(sitting_time)+"[sec]")
                     pir_flag = 0
                     print("pir_flag:"+str(pir_flag))
                 alarm = datetime.datetime.now()
+                nalarm_count = 0
 #define a destroy function for clean up everything after the script finished
 def destroy():
     #turn off buzzer

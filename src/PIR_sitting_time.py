@@ -53,6 +53,7 @@ def main():
                 alarm = datetime.datetime.now()
             #nalarm_count = 0
             pir_flag = 1
+            print("pir_flag："+pir_flag)
             GPIO.output(BuzzerPin,GPIO.LOW)
             #time.sleep(0.5)
             print ('********************')
@@ -69,6 +70,7 @@ def main():
             elapsed_time = now_time - alarm
             if(elapsed_time.seconds < 60):
                 nalarm_count += 1
+                print("pir_flag："+pir_flag)
                 GPIO.output(BuzzerPin,GPIO.HIGH)
                 print ('====================')
                 print ('=     Not alarm...  =')
@@ -84,6 +86,7 @@ def main():
                     sitting_time = datetime.datetime.now() - alarm
                     print("sitting time:".format(sitting_time)+"[sec]")
                     pir_flag = 0
+                    print("pir_flag："+pir_flag)
                 alarm = datetime.datetime.now()
 #define a destroy function for clean up everything after the script finished
 def destroy():

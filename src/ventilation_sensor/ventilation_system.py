@@ -3,7 +3,7 @@ import os
 # from weatherinfo import Weatherinfo
 # from slackcommunicator import SlackNotification, SlackReport
 from stubs.dummytimer import WindowOpeningTimer
-from stubs.dummyweather import Weatherinfo
+from stubs.dummyweather import Weather
 from stubs.dummyslack import Slack
 
 class VentilationSystem:
@@ -14,28 +14,31 @@ class VentilationSystem:
     ui = None
     def setup(self):
         VentilationSystem.timer = WindowOpeningTimer()
-        VentilationSystem.weather = Weatherinfo()
+        VentilationSystem.weather = Weather()
         VentilationSystem.ui = Slack()
         VentilationSystem.timer.set_time_over_callback(interval=30, func=self.warning)
         VentilationSystem.timer.set_window_open_callback(func=self.resolved)
         VentilationSystem.timer.set_period_callback(func=self.periodical_report)
+
+    def start(self):
         VentilationSystem.timer.start()
     
     def periodical_report(self, csv_data_path):
         if os.path.exists(csv_data_path):
-            VentilationSystem.ui.send_report(csv_data_path)
+            VentilationSystem.ui.Visualization_Ventilation(csv_data_path)
         else:
             print("Ventilation System Warning: " + csv_data_path + " don't exists!")
 
     def warning(self, hour, minutes):
-        today = VentilationSystem.weather.get_today()
-        if today == 'sunny' or today == 'cloudy':
-            message = "Warning: sitting for long periods (" + str(hour) + " hr. " + str(minutes) + " min.)"
-            VentilationSystem.ui.send_notification(message)
+        if not VentilationSystem.weather.is_rainy():
+            # message = "Warning: sitting for long periods (" + str(hour) + " hr. " + str(minutes) + " min.)"
+            close_minutes = int(hour) * 60 + int(minutes)
+            VentilationSystem.ui.Notification_Ventilation(close_minutes)
 
     def resolved(self):
-        message = "Notification: window opened!"
-        VentilationSystem.ui.send_notification(message)
+        pass
+        # message = "Notification: window opened!"
+        # VentilationSystem.ui.send_notification(message)
 
     def print_debug(self):
         VentilationSystem.timer.show_window_open_callback()
@@ -45,4 +48,5 @@ class VentilationSystem:
         self.setup()
 
 if __name__ == "__main__":
-    VentilationSystem()
+    vs = VentilationSystem()
+    vs.start()

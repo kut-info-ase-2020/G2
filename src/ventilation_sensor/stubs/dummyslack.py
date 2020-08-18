@@ -1,10 +1,10 @@
 from sys import stderr
 class Slack:
-    def send_report(self, path):
+    def Visualization_Ventilation(self, path):
         print("dummy slack: sending report...", file=stderr)
         print("path: " + path, file=stderr)
         print(path)
-    def send_notification(self, message):
-        print("dummy slack: sending message...", file=stderr)
-        print("message: " + message, file=stderr)
-        print(message)
+    def Notification_Ventilation(self, minutes):
+        print("dummy slack: sending notification...", file=stderr)
+        print("minutes: " + str(minutes), file=stderr)
+        print(minutes)

@@ -73,13 +73,13 @@ class WindowOpeningTimer:
 
     def write_csv(self, filename, data):
         filepath = WindowOpeningTimer.DATA_PATH + filename
-        if not os.path.exists(filepath):
-            with open(filepath, mode='w') as f:
-                f.write("time,flag\n")
-                f.write(str(data.time) + "," + str(data.flag) + "\n")
-        else:
-            with open(filepath, mode='w') as f:
-                f.write(str(data.time) + "," + str(data.flag) + "\n")
+        # if not os.path.exists(filepath):
+        with open(filepath, mode='a') as f:
+                # f.write("time,flag\n")
+            f.write(str(data.time) + "," + str(data.flag) + "\n")
+        # else:
+        #     with open(filepath, mode='w') as f:
+        #         f.write(str(data.time) + "," + str(data.flag) + "\n")
 
     def get_window_status(self):
         msr_sched = scheduler(time, sleep)
@@ -93,7 +93,7 @@ class WindowOpeningTimer:
             msr_sched.run()
             next_time = next_time + timedelta(seconds=1)
         average = int(0.5 + sum(read_values)/len(read_values))
-        time_str = str(start_time.hour) + ":" + str(start_time.minute)
+        time_str = str(start_time.hour) + str(start_time.minute)
         status = None
         if average == ReedSwitch.mfstatus.strong:
             status = WindowOpeningTimer.window_status.closing

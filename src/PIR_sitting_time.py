@@ -62,7 +62,7 @@ def main():
             print ('********************')
             print ('\n')
             now1 = datetime.datetime.now()
-            with open('writer.csv', 'a') as f:
+            with open('sitting_time.csv', 'a') as f:
                 writer = csv.writer(f)
                 writer.writerow([now1, 1])
             time.sleep(1)
@@ -80,12 +80,12 @@ def main():
                 print ('====================')
                 print ('\n')
                 now2 = datetime.datetime.now()
-                with open('writer.csv', 'a') as f:
+                with open('sitting_time.csv', 'a') as f:
                     writer = csv.writer(f)
                     writer.writerow([now2, 0])
                 time.sleep(1)
             else:
-                if(nalarm_count > 30):
+                if(nalarm_count > 40):
                     sitting_time = datetime.datetime.now() - alarm
                     print("sitting time:"+str(sitting_time)+"[sec]")
                     pir_flag = 0

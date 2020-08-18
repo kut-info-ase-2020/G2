@@ -52,6 +52,9 @@ def main():
             if(pir_flag == 0):
                 alarm = datetime.datetime.now()
                 nalarm_count = 0
+                with open('sitting_time.csv', 'a') as f:
+                    writer = csv.writer(f)
+                    writer.writerow([str(now1.hour)+":"+str(now1.minute), 1])
             #nalarm_count = 0
             pir_flag = 1
             print("pir_flag:"+str(pir_flag))
@@ -62,9 +65,6 @@ def main():
             print ('********************')
             print ('\n')
             now1 = datetime.datetime.now()
-            with open('sitting_time.csv', 'a') as f:
-                writer = csv.writer(f)
-                writer.writerow([str(now1.hour)+":"+str(now1.minute), 1])
             time.sleep(1)
         else:
             now_time = datetime.datetime.now()
@@ -80,9 +80,6 @@ def main():
                 print ('====================')
                 print ('\n')
                 now2 = datetime.datetime.now()
-                with open('sitting_time.csv', 'a') as f:
-                    writer = csv.writer(f)
-                    writer.writerow([str(now2.hour)+":"+str(now2.minute), 0])
                 time.sleep(1)
             else:
                 if(nalarm_count > 40):
@@ -90,6 +87,9 @@ def main():
                     print("sitting time:"+str(sitting_time)+"[sec]")
                     pir_flag = 0
                     print("pir_flag:"+str(pir_flag))
+                    with open('sitting_time.csv', 'a') as f:
+                        writer = csv.writer(f)
+                        writer.writerow([str(now2.hour)+":"+str(now2.minute), 0])
                 alarm = datetime.datetime.now()
                 nalarm_count = 0
 #define a destroy function for clean up everything after the script finished

@@ -3,6 +3,8 @@ import time
 import datetime
 import csv
 
+from SlackAPI import SlackAPI_class
+
 # set BCM_GPIO 17(wPi#0) as PIR pin
 PIRPin = 16
 # set BCM_GPIO 18(wPi#1) as buzzer pin
@@ -42,6 +44,7 @@ def main():
         #writer.writerow(["time", "0 or 1"])
     pir_flag = 0
     nalarm_count = 0
+    sitting_count = 0
     global alarm
     alarm = datetime.datetime.now()
     while True:
@@ -90,6 +93,15 @@ def main():
                     with open('Sitting.csv', 'a') as f:
                         writer = csv.writer(f)
                         writer.writerow([str(now2.hour)+str(now2.minute), 0])
+                else:
+                    sitting_count += 1
+                    if sitting_count > 5:
+                        api = SlackAPI_class.SlackAPI(
+                            token=os.environ['SLACK_API_TOKEN'],
+                            channels = '#zikkenzyou_go'
+                            )
+                        api.Notification_Sitting(datetime.datetime.now() - alarm)
+                        return 1
                 alarm = datetime.datetime.now()
                 nalarm_count = 0
 #define a destroy function for clean up everything after the script finished

@@ -30,21 +30,20 @@ def timer_loop():
         channels = '#zikkenzyou_go'
         )
 
-    try:
-        while True:
-            timer_sched.enterabs(next_time.timestamp(), 1, calWBGT.calWBGT, kwargs={'csv_path': export_csv_name})
-            timer_sched.run()
-            # if today < date.today():
-            if current + timedelta(minutes=1) < datetime.now():
-                api.Visualization_HeatStroke(path=export_csv_name)
-                today = date.today()
-                export_csv_name = "window-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
-                with open(export_csv_name, 'a') as f:
-                    writer = csv.writer(f)
-                    writer.writerow(['date','Hum','Temp','WBGT'])
-                current = datetime.now().replace(microsecond=0)
-            # next_time = current + timedelta(minutes=30)
-            next_time = current + timedelta(seconds=5)
+    while True:
+        timer_sched.enterabs(next_time.timestamp(), 1, calWBGT.calWBGT, kwargs={'csv_path': export_csv_name})
+        timer_sched.run()
+        # if today < date.today():
+        if current + timedelta(minutes=1) < datetime.now():
+            api.Visualization_HeatStroke(path=export_csv_name)
+            today = date.today()
+            export_csv_name = "window-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
+            with open(export_csv_name, 'a') as f:
+                writer = csv.writer(f)
+                writer.writerow(['date','Hum','Temp','WBGT'])
+            current = datetime.now().replace(microsecond=0)
+        # next_time = current + timedelta(minutes=30)
+        next_time = current + timedelta(seconds=5)
 
 if __name__=='__main__':
     timer_loop()

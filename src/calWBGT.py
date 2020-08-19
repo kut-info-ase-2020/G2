@@ -54,15 +54,17 @@ def calWBGT():
                     token=os.environ['SLACK_API_TOKEN'], 
                     channels = '#zikkenzyou_go'
                     )
-                api.Notification_Heatstroke(b,c)
+                api.Notification_HeatStroke(b,c)
                 #WBGTが危険の場合、1を返す
                 return 1
             else:
+                """
                 api = SlackAPI_class.SlackAPI(
                     token=os.environ['SLACK_API_TOKEN'], 
                     channels = '#zikkenzyou_go'
                     )
-                api.Notification_Heatstroke(b,c)
+                api.Notification_HeatStroke(b,c)
+                """
                 return 0
         if countMaxSensing == 0:
             with open('dataWBGT.csv', 'a') as f:

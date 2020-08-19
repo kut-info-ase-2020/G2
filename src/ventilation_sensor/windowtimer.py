@@ -72,6 +72,8 @@ class WindowOpeningTimer:
             self.window_status_now = result.flag
 
     def write_csv(self, filename, data):
+        if not os.path.exists(WindowOpeningTimer.DATA_PATH):
+            os.mkdir(WindowOpeningTimer.DATA_PATH)
         filepath = WindowOpeningTimer.DATA_PATH + filename
         # if not os.path.exists(filepath):
         with open(filepath, mode='a') as f:

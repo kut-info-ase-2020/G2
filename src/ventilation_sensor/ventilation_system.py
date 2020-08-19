@@ -1,5 +1,5 @@
 import os
-# from windowtimer import WindowOpeningTimer
+# from ventilation_sensor.windowtimer import WindowOpeningTimer
 from weatherAPI.weather import Weather
 # from slackcommunicator import SlackNotification, SlackReport
 from ventilation_sensor.stubs.dummytimer import WindowOpeningTimer

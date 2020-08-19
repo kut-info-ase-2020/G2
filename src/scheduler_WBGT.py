@@ -1,5 +1,6 @@
 import calWBGT
 from SlackAPI.SlackAPI_class import SlackAPI
+from sched import scheduler
 import os
 from time import time
 from time import sleep
@@ -8,7 +9,7 @@ from datetime import timedelta
 from datetime import date
 import csv
 
-def timer_loop(self):
+def timer_loop():
     timer_sched = scheduler(time, sleep)
     current = datetime.now()
     # if current.minute < 30:

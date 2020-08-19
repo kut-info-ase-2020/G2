@@ -1,10 +1,10 @@
 import os
 # from windowtimer import WindowOpeningTimer
-# from weatherinfo import Weatherinfo
+from weatherAPI.weather import Weather
 # from slackcommunicator import SlackNotification, SlackReport
-from stubs.dummytimer import WindowOpeningTimer
-from stubs.dummyweather import Weather
-from stubs.dummyslack import Slack
+from ventilation_sensor.stubs.dummytimer import WindowOpeningTimer
+# from ventilation_sensor.stubs.dummyweather import Weather
+from ventilation_sensor.stubs.dummyslack import Slack
 
 class VentilationSystem:
     """VentilationSystem

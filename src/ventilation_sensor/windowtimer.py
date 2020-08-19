@@ -51,6 +51,9 @@ class WindowOpeningTimer:
                     self.periodical_report_func(export_csv_name)
                     today = date.today()
                     current = datetime.now().replace(microsecond=0)
+                    next_csv_name = "window-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
+                    if not os.path.exists(WindowOpeningTimer.DATA_PATH + next_csv_name):
+                        self.write_csv(next_csv_name, WindowOpeningTimer.WindowData(time=current.replace(hour=0, minute=0).strftime("%H%M"), flag=WindowOpeningTimer.window_status_now))
                 # next_time = next_time + timedelta(minutes=30)
                 next_time = next_time + timedelta(seconds=30)
         except KeyboardInterrupt:

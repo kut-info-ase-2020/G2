@@ -11,7 +11,7 @@ from SlackAPI import SlackAPI_class
 #token=os.environ['SLACK_API_TOKEN']
 #channels = '#zikkenzyou_go'
 
-def calWBGT():
+def calWBGT(csv_path):
     #センシングを行う回数
     countSensing = 10
     #故障時に備えたループの最大回数
@@ -46,8 +46,9 @@ def calWBGT():
             a = statistics.median(dataWBGT)
             b = statistics.median(datatemperature)
             c = statistics.median(datahumidity)
-            with open('dataWBGT.csv', 'a') as f:
+            with open(csv_path, 'a') as f:
                 writer = csv.writer(f)
+
                 writer.writerow([datatime, c, b, a])
             if a > 25:
                 api = SlackAPI_class.SlackAPI(
@@ -67,7 +68,7 @@ def calWBGT():
                 """
                 return 0
         if countMaxSensing == 0:
-            with open('dataWBGT.csv', 'a') as f:
+            with open(csv_path, 'a') as f:
                 writer = csv.writer(f)
                 writer.writerow([datatime, -1, -1, -1])
             return -1

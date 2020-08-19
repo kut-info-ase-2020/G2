@@ -11,6 +11,11 @@ from SlackAPI import SlackAPI_class
 #token=os.environ['SLACK_API_TOKEN']
 #channels = '#zikkenzyou_go'
 
+api = SlackAPI_class.SlackAPI(
+    token=os.environ['SLACK_API_TOKEN'], 
+    channels = '#zikkenzyou_go'
+    )
+
 def calWBGT(csv_path):
     #センシングを行う回数
     countSensing = 10
@@ -51,19 +56,11 @@ def calWBGT(csv_path):
 
                 writer.writerow([datatime, c, b, a])
             if a > 25:
-                api = SlackAPI_class.SlackAPI(
-                    token=os.environ['SLACK_API_TOKEN'], 
-                    channels = '#zikkenzyou_go'
-                    )
                 api.Notification_HeatStroke(b,c)
                 #WBGTが危険の場合、1を返す
                 return 1
             else:
                 """
-                api = SlackAPI_class.SlackAPI(
-                    token=os.environ['SLACK_API_TOKEN'], 
-                    channels = '#zikkenzyou_go'
-                    )
                 api.Notification_HeatStroke(b,c)
                 """
                 return 0

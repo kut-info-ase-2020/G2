@@ -1,6 +1,6 @@
 import time
 from collections import namedtuple
-from sensor import Sensor
+from ventilation_sensor.sensor import Sensor
 import RPi.GPIO as GPIO
 
 class ReedSwitch(Sensor):

@@ -1,4 +1,4 @@
-# from reedswitch import ReedSwitch
+# from ventilation_sensor.reedswitch import ReedSwitch
 from ventilation_sensor.stubs.dummysensor import ReedSwitch
 from sched import scheduler
 from time import time

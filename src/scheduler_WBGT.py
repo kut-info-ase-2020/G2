@@ -1,4 +1,4 @@
-import callWBGT
+import calWBGT
 from SlackAPI.SlackAPI_class import SlackAPI
 import os
 from time import time
@@ -46,3 +46,5 @@ def timer_loop(self):
     except KeyboardInterrupt:
         self.destroy()
 
+if __name__=='__main__':
+    timer_loop()

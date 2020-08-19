@@ -64,9 +64,9 @@ def main():
             print("pir_flag:"+str(pir_flag))
             GPIO.output(BuzzerPin,GPIO.LOW)
             #time.sleep(0.5)
-            print ('********************')
-            print ('*     alarm!     *')
-            print ('********************')
+            #print ('********************')
+            #print ('*     alarm!     *')
+            #print ('********************')
             print ('\n')
             time.sleep(1)
         else:
@@ -78,13 +78,13 @@ def main():
                 print("nalarm_count:"+str(nalarm_count))
                 print("pir_flag:"+str(pir_flag))
                 GPIO.output(BuzzerPin,GPIO.HIGH)
-                print ('====================')
-                print ('=     Not alarm...  =')
-                print ('====================')
+                #print ('====================')
+                #print ('=     Not alarm...  =')
+                #print ('====================')
                 print ('\n')
                 time.sleep(1)
             else:
-                if(nalarm_count > 40):
+                if(nalarm_count > 45):
                     sitting_time = datetime.datetime.now() - alarm
                     print("sitting time:"+str(sitting_time)+"[sec]")
                     pir_flag = 0

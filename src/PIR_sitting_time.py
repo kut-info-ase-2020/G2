@@ -55,7 +55,7 @@ def main():
                 now1 = datetime.datetime.now()
                 with open('sitting_time.csv', 'a') as f:
                     writer = csv.writer(f)
-                    writer.writerow([str(now1.hour)+":"+str(now1.minute), 1])
+                    writer.writerow([str(now1.hour)+str(now1.minute), 1])
             #nalarm_count = 0
             pir_flag = 1
             print("pir_flag:"+str(pir_flag))
@@ -89,7 +89,7 @@ def main():
                     now2 = datetime.datetime.now()
                     with open('sitting_time.csv', 'a') as f:
                         writer = csv.writer(f)
-                        writer.writerow([str(now2.hour)+":"+str(now2.minute), 0])
+                        writer.writerow([str(now2.hour)+str(now2.minute), 0])
                 alarm = datetime.datetime.now()
                 nalarm_count = 0
 #define a destroy function for clean up everything after the script finished

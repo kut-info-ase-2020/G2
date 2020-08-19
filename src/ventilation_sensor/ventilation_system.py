@@ -1,4 +1,5 @@
 import os
+from sys import stderr
 # from ventilation_sensor.windowtimer import WindowOpeningTimer
 from weatherAPI.weather import Weather
 # from slackcommunicator import SlackNotification, SlackReport
@@ -32,7 +33,9 @@ class VentilationSystem:
             print("Ventilation System Warning: " + csv_data_path + " don't exists!")
 
     def warning(self, hour, minutes):
-        if not VentilationSystem.weather.is_rainy():
+        rain = VentilationSystem.weather.is_raining()
+        print("rainy?:", rain, file=stderr)
+        if not rain:
             # message = "Warning: sitting for long periods (" + str(hour) + " hr. " + str(minutes) + " min.)"
             close_minutes = int(hour) * 60 + int(minutes)
             VentilationSystem.ui.Notification_Ventilation(close_minutes)

@@ -78,7 +78,7 @@ class SlackAPI:
             assert e.response["error"]
 
     def Visualization_Sitting(self,path):
-        array = np.loadtxt(path)
+        array = np.loadtxt(path, delimiter=',')
         print(array)
         size = array.shape[0]
         #blue
@@ -115,7 +115,7 @@ class SlackAPI:
         self.Visualization_send(file_path,message)
 
     def Visualization_Ventilation(self,path):
-        array = np.loadtxt(path)
+        array = np.loadtxt(path, delimiter=',')
         size = array.shape[0]
         #green
         col1 = np.array([176/255,255/255,5/255])

@@ -7,7 +7,7 @@ import statistics
 import time
 import os
 
-from src.SlackAPI import SlackAPI_class
+from SlackAPI import SlackAPI_class
 #token=os.environ['SLACK_API_TOKEN']
 #channels = '#zikkenzyou_go'
 

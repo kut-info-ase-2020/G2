@@ -37,7 +37,7 @@ def main():
 #print info
     print_message()
     # Create CSV file
-    with open('sitting_time.csv', 'w') as f:
+    with open('Sitting.csv', 'w') as f:
         writer = csv.writer(f)
         #writer.writerow(["time", "0 or 1"])
     pir_flag = 0
@@ -53,7 +53,7 @@ def main():
                 alarm = datetime.datetime.now()
                 nalarm_count = 0
                 now1 = datetime.datetime.now()
-                with open('sitting_time.csv', 'a') as f:
+                with open('Sitting.csv', 'a') as f:
                     writer = csv.writer(f)
                     writer.writerow([str(now1.hour)+str(now1.minute), 1])
             #nalarm_count = 0
@@ -87,7 +87,7 @@ def main():
                     pir_flag = 0
                     print("pir_flag:"+str(pir_flag))
                     now2 = datetime.datetime.now()
-                    with open('sitting_time.csv', 'a') as f:
+                    with open('Sitting.csv', 'a') as f:
                         writer = csv.writer(f)
                         writer.writerow([str(now2.hour)+str(now2.minute), 0])
                 alarm = datetime.datetime.now()

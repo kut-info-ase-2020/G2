@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import calWBGT
 
 if __name__ == '__main__':

@@ -1,19 +1,25 @@
+# -*- coding: utf-8 -*-
 import RPi.GPIO as GPIO
 import csv
 from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 import statistics
+import time
+
+#import SlackAPI_class
+#token=os.environ['SLACK_API_TOKEN']
+#channels = '#zikkenzyou_go'
 
 def calWBGT():
-    #センサーの初期設定
-    setup()
     #センシングを行う回数
     countSensing = 10
     #故障時に備えたループの最大回数
-    countMaxSensing = 100
+    countMaxSensing = 1000
     #タイムゾーンの生成とセンシングした時刻を計測
     JST = timezone(timedelta(hours=+9), 'JST')
     dt_now = datetime.now(JST)
-    datatime = dt_now.strftime('%H:%M')
+    dt_now = datetime.now()
+    datatime = dt_now.strftime('%H:%M:%S')
     #WBGTと気温と湿度のデータ格納配列
     dataWBGT = []
     datatemperature = []
@@ -28,6 +34,7 @@ def calWBGT():
             #うまくセンサーの値が一回取れた場合
             countSensing-=1
             humidity, temperature = result
+            print(humidity)
             disc_idx = calc_discomfort_index(humidity, temperature)
             dataWBGT.append(disc_idx)
             datatemperature.append(temperature)
@@ -40,21 +47,23 @@ def calWBGT():
             c = statistics.median(datahumidity)
             with open('dataWBGT.csv', 'a') as f:
                 writer = csv.writer(f)
-                writer.writerow([datatime, a, b, c])
+                writer.writerow([datatime, c, b, a])
             if a > 25:
+                #api = SlackAPI_class.SlackAPI(token,channels)
+                #api.Notification_Heatstroke(b,c)
                 #WBGTが危険の場合、1を返す
                 return 1
             else:
+                #api = SlackAPI_class.SlackAPI(token,channels)
+                #api.Notification_Heatstroke(b,c)
                 return 0
-            #with open('dataWBGT.csv') as f:
-                #print(f.read())
         if countMaxSensing == 0:
             with open('dataWBGT.csv', 'a') as f:
                 writer = csv.writer(f)
                 writer.writerow([datatime, -1, -1, -1])
             return -1
 
-def setup():
+def read_dht11_dat():
     #DHT11 connect to BCM_GPIO14
     DHTPIN = 14
     BAD_LED_PIN = 27
@@ -76,7 +85,6 @@ def setup():
     for PIN in LED_PINS:
         GPIO.setup(PIN, GPIO.OUT, initial=GPIO.LOW)
 
-def read_dht11_dat():
     GPIO.setup(DHTPIN, GPIO.OUT)
     GPIO.output(DHTPIN, GPIO.HIGH)
     time.sleep(0.05)
@@ -134,7 +142,7 @@ def read_dht11_dat():
             else:
                 continue
     if len(lengths) != 40:
-        print "Data not good, skip"
+        #print "Data not good, skip"
         return False
 
     shortest_pull_up = min(lengths)
@@ -159,10 +167,10 @@ def read_dht11_dat():
         if ((i + 1) % 8 == 0):
             the_bytes.append(byte)
             byte = 0
-    print the_bytes
+    #print the_bytes
     checksum = (the_bytes[0] + the_bytes[1] + the_bytes[2] + the_bytes[3]) & 0xFF
     if the_bytes[4] != checksum:
-        print "Data not good, skip"
+        #print "Data not good, skip"
         return False
 
     return the_bytes[0], the_bytes[2]

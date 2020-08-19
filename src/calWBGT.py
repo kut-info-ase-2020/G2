@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 from datetime import datetime, timedelta
 import statistics
 import time
+import os
 
 #import SlackAPI_class
 #token=os.environ['SLACK_API_TOKEN']
@@ -49,13 +50,19 @@ def calWBGT():
                 writer = csv.writer(f)
                 writer.writerow([datatime, c, b, a])
             if a > 25:
-                #api = SlackAPI_class.SlackAPI(token,channels)
-                #api.Notification_Heatstroke(b,c)
+                api = SlackAPI_class.SlackAPI(
+                    token=os.environ['SLACK_API_TOKEN'], 
+                    channels = '#zikkenzyou_go'
+                    )
+                api.Notification_Heatstroke(b,c)
                 #WBGTが危険の場合、1を返す
                 return 1
             else:
-                #api = SlackAPI_class.SlackAPI(token,channels)
-                #api.Notification_Heatstroke(b,c)
+                api = SlackAPI_class.SlackAPI(
+                    token=os.environ['SLACK_API_TOKEN'], 
+                    channels = '#zikkenzyou_go'
+                    )
+                api.Notification_Heatstroke(b,c)
                 return 0
         if countMaxSensing == 0:
             with open('dataWBGT.csv', 'a') as f:

@@ -45,8 +45,6 @@ def timer_loop():
                 current = datetime.now().replace(microsecond=0)
             # next_time = current + timedelta(minutes=30)
             next_time = current + timedelta(seconds=5)
-    except KeyboardInterrupt:
-        self.destroy()
 
 if __name__=='__main__':
     timer_loop()

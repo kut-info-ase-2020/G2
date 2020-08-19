@@ -8,3 +8,5 @@ class Slack:
         print("dummy slack: sending notification...", file=stderr)
         print("minutes: " + str(minutes), file=stderr)
         print(minutes)
+    def __init__(self, token, channel):
+        pass

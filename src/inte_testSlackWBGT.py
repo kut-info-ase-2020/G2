@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import calWBGT
 from SlackAPI.SlackAPI_class import SlackAPI
+import os
 
 if __name__ == '__main__':
     #setup()

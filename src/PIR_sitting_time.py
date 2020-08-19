@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 import time
 import datetime
 import csv
+import os
 
 from SlackAPI import SlackAPI_class
 
@@ -37,9 +38,13 @@ def setup():
 #main function
 def main():
 #print info
+    api = SlackAPI_class.SlackAPI(
+        token=os.environ['SLACK_API_TOKEN'],
+        channels = '#zikkenzyou_go'
+        )
     print_message()
     # Create CSV file
-    with open('Sitting.csv', 'w') as f:
+    with open('Sitting.csv', 'a') as f:
         writer = csv.writer(f)
         #writer.writerow(["time", "0 or 1"])
     pir_flag = 0
@@ -47,13 +52,14 @@ def main():
     sitting_count = 0
     global alarm
     alarm = datetime.datetime.now()
+    sitting_start =datetime.datetime.now()
     while True:
         #read Sw520dPin's level
-	input = GPIO.input(PIRPin)
-	print(input)
+        input = GPIO.input(PIRPin)
+        print(input)
         if(input != 0):
             if(pir_flag == 0):
-                alarm = datetime.datetime.now()
+                sitting_start = datetime.datetime.now()
                 nalarm_count = 0
                 now1 = datetime.datetime.now()
                 with open('Sitting.csv', 'a') as f:
@@ -85,7 +91,7 @@ def main():
                 time.sleep(1)
             else:
                 if(nalarm_count > 45):
-                    sitting_time = datetime.datetime.now() - alarm
+                    sitting_time = datetime.datetime.now() - sitting_start
                     print("sitting time:"+str(sitting_time)+"[sec]")
                     pir_flag = 0
                     print("pir_flag:"+str(pir_flag))
@@ -96,12 +102,8 @@ def main():
                 else:
                     sitting_count += 1
                     if sitting_count > 5:
-                        api = SlackAPI_class.SlackAPI(
-                            token=os.environ['SLACK_API_TOKEN'],
-                            channels = '#zikkenzyou_go'
-                            )
-                        api.Notification_Sitting(datetime.datetime.now() - alarm)
-                        return 1
+                        sitting_time_amount = datetime.datetime.now() - sitting_start
+                        api.Notification_Sitting(int(sitting_time_amount.total_seconds() / 60))
                 alarm = datetime.datetime.now()
                 nalarm_count = 0
 #define a destroy function for clean up everything after the script finished

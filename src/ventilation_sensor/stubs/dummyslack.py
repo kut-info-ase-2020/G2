@@ -1,5 +1,5 @@
 from sys import stderr
-class Slack:
+class SlackAPI:
     def Visualization_Ventilation(self, path):
         print("dummy slack: sending report...", file=stderr)
         print("path: " + path, file=stderr)

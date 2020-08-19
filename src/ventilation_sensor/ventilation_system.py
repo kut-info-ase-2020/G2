@@ -2,10 +2,10 @@ import os
 from sys import stderr
 # from ventilation_sensor.windowtimer import WindowOpeningTimer
 from weatherAPI.weather import Weather
-# from slackcommunicator import SlackNotification, SlackReport
+# from SlackAPI.SlackAPI_class import SlackAPI
 from ventilation_sensor.stubs.dummytimer import WindowOpeningTimer
 # from ventilation_sensor.stubs.dummyweather import Weather
-from ventilation_sensor.stubs.dummyslack import Slack
+from ventilation_sensor.stubs.dummyslack import SlackAPI
 
 class VentilationSystem:
     """VentilationSystem
@@ -18,7 +18,7 @@ class VentilationSystem:
         VentilationSystem.weather = Weather()
         slack_token = os.environ['SLACK_API_TOKEN']
         slack_channnel = '#zikkenzyou_go'
-        VentilationSystem.ui = Slack(slack_token, slack_channnel)
+        VentilationSystem.ui = SlackAPI(slack_token, slack_channnel)
         VentilationSystem.timer.set_time_over_callback(interval=30, func=self.warning)
         VentilationSystem.timer.set_window_open_callback(func=self.resolved)
         VentilationSystem.timer.set_period_callback(func=self.periodical_report)

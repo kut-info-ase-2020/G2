@@ -38,7 +38,7 @@ def timer_loop():
                 api.Visualization_HeatStroke(path=export_csv_name)
                 today = date.today()
                 export_csv_name = "window-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
-                with open('dataWBGT.csv', 'a') as f:
+                with open(export_csv_name, 'a') as f:
                     writer = csv.writer(f)
                     writer.writerow(['date','Hum','Temp','WBGT'])
                 current = datetime.now().replace(microsecond=0)

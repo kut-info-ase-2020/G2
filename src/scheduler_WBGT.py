@@ -20,9 +20,10 @@ def timer_loop():
     next_time = current
     today = date.today()
     export_csv_name = "window-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
-    if os.path.exists(export_csv_name):
-        writer = csv.writer(f)
-        writer.writerow(['date','Hum','Temp','WBGT'])
+    if not os.path.exists(export_csv_name):
+        with open(export_csv_name, 'a') as f:
+            writer = csv.writer(f)
+            writer.writerow(['date','Hum','Temp','WBGT'])
 
     api = SlackAPI(
         token=os.environ['SLACK_API_TOKEN'], 

@@ -43,17 +43,17 @@ class WindowOpeningTimer:
         today = date.today()
         try:
             while True:
-                timer_sched.enterabs(current.timestamp(), 1, self.measurement_next)
+                timer_sched.enterabs(next_time.timestamp(), 1, self.measurement_next)
                 timer_sched.run()
                 # if today < date.today():
-                if current + timedelta(seconds=30) < datetime.now():
+                if current + timedelta(minutes=5) < datetime.now():
                     export_csv_name = "window-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
                     if os.path.exists(export_csv_name):
                         self.periodical_report_func(export_csv_name)
                     today = date.today()
                     current = datetime.now().replace(microsecond=0)
-                # next_time = current + timedelta(minutes=30)
-                next_time = current + timedelta(minutes=5)
+                # next_time = next_time + timedelta(minutes=30)
+                next_time = next_time + timedelta(minutes=1)
         except KeyboardInterrupt:
             self.destroy()
 

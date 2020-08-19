@@ -6,7 +6,7 @@ class Weather:
         return self.weather_str
     def set_weather(self, weather):
         Weather.weather_str = weather
-    def is_rainy(self):
+    def is_raining(self):
         if Weather.weather_str == 'rainy':
             return True
         return False

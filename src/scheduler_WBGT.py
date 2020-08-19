@@ -31,7 +31,7 @@ def timer_loop():
 
     try:
         while True:
-            timer_sched.enterabs(next_time.timestamp(), 1, calWBGT.calWBGT(csv_path=export_csv_name))
+            timer_sched.enterabs(next_time.timestamp(), 1, calWBGT.calWBGT, kwargs={'csv_path': export_csv_name})
             timer_sched.run()
             # if today < date.today():
             if current + timedelta(minutes=1) < datetime.now():

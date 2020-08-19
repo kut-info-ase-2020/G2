@@ -1,5 +1,12 @@
 [SlackAPI_Class.py]に以下のメソッドを実装している  
 [SlackAPI_Class_test.py]にてテストが行える
+## 必要なimport
+* python 3.7.7
+* numpy
+* pandas
+* matplotlib
+* SlackClient
+
 
 # Notification_Sitting
 * 長時間椅子に座っている場合に通知を飛ばすメソッド。

@@ -1,12 +1,13 @@
 import slack
 import random
 import os
-@slack.RTMClient.run_on(event='message')
+@slack.RTMClient.run_on("pin_added")
 def fortune(**payload):
     print("responce get!")
     data = payload['data']
     web_client = payload['web_client']
     rtm_client = payload['rtm_client']
+    print(data)
     # textはreplyなどには含まれないので、subtypeがなし=親メッセージかを確認する
     if 'subtype' not in data and 'fortune' in data['text']:
         channel_id = data['channel']

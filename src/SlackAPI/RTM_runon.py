@@ -28,6 +28,9 @@ def say_hello(**payload):
         assert e.response["error"]  # str like 'invalid_auth', 'channel_not_found'
         print(f"Got an error: {e.response['error']}")
 
-rtm_client = RTMClient(token=os.environ["SLACK_API_TOKEN"])
+
+
+tokenkey = os.environ["SLACK_API_TOKEN"]
+rtm_client = RTMClient(token = tokenkey)
 print("Hello_test")
 rtm_client.start()

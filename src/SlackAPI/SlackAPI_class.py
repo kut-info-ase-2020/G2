@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import io
 from slack import WebClient
+from slack import RTMClient
 import requests
 import matplotlib as mpl
 import matplotlib.pyplot as plt

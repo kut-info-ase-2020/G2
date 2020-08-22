@@ -18,7 +18,6 @@ def say_hello(**payload):
     channel_id = data['channel']
     thread_ts = data['ts']
     user = data['user']
-    
 
     try:
         response = web_client.chat_postMessage(

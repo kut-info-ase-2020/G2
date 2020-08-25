@@ -155,15 +155,15 @@ class SlackAPI:
         df = pd.read_csv(path,parse_dates=[0])
         # グラフ作成
         plt.figure(figsize=(8,4))
-        plt.plot(df['date'], df['Temp'],color = "red",marker='D')
-        plt.plot(df['date'], df['Hum'],color = "cyan",marker = 'o')
-        plt.plot(df['date'], df['WBGT'],color = "black",marker='*')
+        plt.plot(pd.to_datetime(df['date']), df['Temp'],color = "red",marker='D')
+        plt.plot(pd.to_datetime(df['date']), df['Hum'],color = "cyan",marker = 'o')
+        plt.plot(pd.to_datetime(df['date']), df['WBGT'],color = "black",marker='*')
         plt.legend(['Temp','Humidity','WBGT'])
         # ロケータで刻み幅を設定
-        xloc = mpl.dates.HourLocator(byhour=range(0,24,1))
+        xloc = mpl.dates.HourLocator(byhour=range(0,24,3))
         plt.gca().xaxis.set_major_locator(xloc)
         # 時刻のフォーマットを設定
-        xfmt = mpl.dates.DateFormatter("%H")
+        xfmt = mpl.dates.DateFormatter("%H:%M")
         plt.gca().xaxis.set_major_formatter(xfmt)
         print("HeatStroke Graph created!")
         #save graph

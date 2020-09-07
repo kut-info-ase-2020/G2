@@ -23,7 +23,7 @@ def say_hello(**payload):
     user = data['user']
     print(user)
     if 'subtype' not in data and 'help' in data['text']:
-        res_message = "helpメッセージを表示します！\n[set-location,{place-name}]と入力してください！\n{place-name}は[kochi][kami]のように半角英字で地名を入力すると地域情報を設定できます！\n地域設定が成功した場合はリプライでメッセージを送信します！\n例:set-location,kochi"
+        res_message =  "天気の情報に関する地域設定の方法について説明します,このサービスではコマンドを入力することで自分の地域を設定することができます\n地域名で設定:[set-location,{place-name}]\n緯度、経度で設定:[set-location,{ido},{keido}]\n{place-name}は[kochi][kami]のように半角英字で地名を入力すると地域情報を設定できます！\n{ido}{keido}は緯度経度の値をそのまま半角数字で入力してください！\n地域設定が成功した場合はリプライでメッセージを送信します！\n地域設定の例:Set-Placename,kochi\n緯度経度設定の例:Set-Location,30,30"
         try:
             response = web_client.chat_postMessage(
                 channel=channel_id,
@@ -35,12 +35,34 @@ def say_hello(**payload):
             assert e.response["error"]  # str like 'invalid_auth', 'channel_not_found'
             print(f"Got an error: {e.response['error']}")
 
-    elif  'subtype' not in data and 'set-location,' in data['text']:
+    elif  'subtype' not in data and 'Set-Placename,' in data['text']:
         s = message.split(',')
         print(s)
         place = s[1]
         print(place)
         weather_result_message = weatherAPI.set_placename(place)
+        print(weather_result_message)
+        try:
+            response = web_client.chat_postMessage(
+                channel=channel_id,
+                #text="地域情報を設定しました！",
+                text=weather_result_message,
+                thread_ts=thread_ts
+            )
+        except SlackApiError as e:
+            # You will get a SlackApiError if "ok" is False
+            assert e.response["ok"] is False
+            assert e.response["error"]  # str like 'invalid_auth', 'channel_not_found'
+            print(f"Got an error: {e.response['error']}")
+
+    elif  'subtype' not in data and 'Set-Location,' in data['text']:
+        s = message.split(',')
+        print(s)
+        ido = s[1]
+        keido = s[2]
+        print(ido)
+        print(keido)
+        weather_result_message = weatherAPI.set_location(int(ido),int(keido))
         print(weather_result_message)
         try:
             response = web_client.chat_postMessage(
@@ -75,7 +97,7 @@ print("class test now...")
 
 Slack = SlackAPI_class.SlackAPI(token,channels)
 
-message = "wow!"
+message = "こんにちは、ここでは換気通知システムで用いられるあなたの地域設定が行えます。[help]と入力してチュートリアルをご確認ください"
 Slack.send_message(message)
 
 message = 'kochi'

@@ -41,12 +41,15 @@ class WindowOpeningTimer:
         current = current.replace(microsecond=0) # for test
         next_time = current
         today = date.today()
+        next_csv_name = "window-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
+        if not os.path.exists(WindowOpeningTimer.DATA_PATH + next_csv_name):
+            self.write_csv(next_csv_name, WindowOpeningTimer.WindowData(time=current.replace(hour=0, minute=0).strftime("%H%M"), flag=WindowOpeningTimer.window_status_now))
         try:
             while True:
                 timer_sched.enterabs(next_time.timestamp(), 1, self.measurement_next)
                 timer_sched.run()
-                # if today < date.today():
-                if current + timedelta(minutes=1) < datetime.now():
+                if today < date.today():
+                # if current + timedelta(minutes=1) < datetime.now():
                     export_csv_name = WindowOpeningTimer.DATA_PATH + "window-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
                     self.periodical_report_func(export_csv_name)
                     today = date.today()
@@ -55,6 +58,7 @@ class WindowOpeningTimer:
                     if not os.path.exists(WindowOpeningTimer.DATA_PATH + next_csv_name):
                         self.write_csv(next_csv_name, WindowOpeningTimer.WindowData(time=current.replace(hour=0, minute=0).strftime("%H%M"), flag=WindowOpeningTimer.window_status_now))
                 # next_time = next_time + timedelta(minutes=30)
+                # next_time = next_time + timedelta(minutes=1)
                 next_time = next_time + timedelta(seconds=30)
         except KeyboardInterrupt:
             self.destroy()

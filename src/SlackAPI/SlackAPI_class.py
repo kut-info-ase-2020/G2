@@ -8,6 +8,7 @@ from slack import RTMClient
 import requests
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+from PIL import Image
 from slack.errors import SlackApiError
 
 class SlackAPI:
@@ -79,7 +80,7 @@ class SlackAPI:
             assert e.response["error"]
 
     def Visualization_Sitting(self,path):
-        array = np.loadtxt(path)
+        array = np.loadtxt(path,delimiter=',')
         print(array)
         size = array.shape[0]
         #blue
@@ -89,9 +90,28 @@ class SlackAPI:
         #label
         st = ["Standing","Sitting"]
         colorlist = np.zeros((size,3),np.float64)
-        label_list = []
+        start_time = int(array[0,0])
+        now_time = 0
+        time_array = [0]
+        label_list = ['Standing']
         #create label and color list
-        for w in range(size):
+        for w in range(size+1):
+            if w == size:
+                time_array.append(2398 - now_time)
+                label_list.append(st[0])
+                break
+            num = int(array[w,0])
+            minute = num %100
+            hour = (num - minute)
+            print(minute)
+            print(hour)
+            minute = round(minute*1.6666666666666666)
+            num = hour + minute
+            sabun_time = num - now_time
+            now_time = num
+            print(now_time)
+            time_array.append(sabun_time)
+            
             if array[w,1] == 0:
                 colorlist[w,:] = col1[:]
                 label_list.append(st[0])
@@ -99,8 +119,10 @@ class SlackAPI:
                 colorlist[w,:] = col2[:]
                 label_list.append(st[1])
         #create Graph
+        print(time_array)
+        print(label_list)
         plt.figure()
-        plt.pie(array[:,0], labels=label_list,colors = colorlist,startangle=90,counterclock=False)
+        plt.pie(time_array,colors = colorlist,startangle=90,counterclock=False)
         label_time = ["AM","PM"]
         x_time = np.array([100 , 100])
         colorlist_time = ["pink","magenta"]
@@ -108,15 +130,23 @@ class SlackAPI:
         centre_circle = plt.Circle((0,0),0.6,color='black', fc='white',linewidth=1.25)
         fig = plt.gcf()
         fig.gca().add_artist(centre_circle)
+        plt.legend(st,bbox_to_anchor=(1.3, 1.1), loc='upper right', borderaxespad=0, fontsize=15)
         print("Sitting Graph created!")
         #save graph
         file_path = "Sitting_Graph.png"
         fig.savefig(file_path)
+        
+        img = np.array(Image.open('tokei.png'))
+        graph = np.array(Image.open(file_path))
+        new_graph = np.where(img == [255, 255, 255, 255], graph, img)
+        pil_img = Image.fromarray(new_graph)
+        #print(pil_img.mode) #RGBA
+        pil_img.save(file_path)
         message = "昨日1日のあなたの座っていた時間の記録のグラフです！"
         self.Visualization_send(file_path,message)
 
     def Visualization_Ventilation(self,path):
-        array = np.loadtxt(path)
+        array = np.loadtxt(path,delimiter=',')
         size = array.shape[0]
         #green
         col1 = np.array([176/255,255/255,5/255])
@@ -125,9 +155,28 @@ class SlackAPI:
         #label
         st = ["Close","Open"]
         colorlist = np.zeros((size,3),np.float64)
-        label_list = []
+        start_time = int(array[0,0])
+        now_time = 0
+        time_array = [0]
+        label_list = ['Close']
         #create label and color list
-        for w in range(size):
+        for w in range(size+1):
+            if w == size:
+                time_array.append(2398 - now_time)
+                label_list.append(st[0])
+                break
+            num = int(array[w,0])
+            minute = num %100
+            hour = (num - minute)
+            print(minute)
+            print(hour)
+            minute = round(minute*1.6666666666666666)
+            num = hour + minute
+            sabun_time = num - now_time
+            now_time = num
+            print(now_time)
+            time_array.append(sabun_time)
+            
             if array[w,1] == 0:
                 colorlist[w,:] = col1[:]
                 label_list.append(st[0])
@@ -135,8 +184,10 @@ class SlackAPI:
                 colorlist[w,:] = col2[:]
                 label_list.append(st[1])
         #create Graph
+        print(time_array)
+        print(label_list)
         plt.figure()
-        plt.pie(array[:,0], labels=label_list,colors = colorlist,startangle=90,counterclock=False)
+        plt.pie(time_array, colors = colorlist,startangle=90,counterclock=False)
         label_time = ["AM","PM"]
         x_time = np.array([100 , 100])
         colorlist_time = ["pink","magenta"]
@@ -144,10 +195,19 @@ class SlackAPI:
         centre_circle = plt.Circle((0,0),0.6,color='black', fc='white',linewidth=1.25)
         fig = plt.gcf()
         fig.gca().add_artist(centre_circle)
+        plt.legend(st,bbox_to_anchor=(1.3, 1.1), loc='upper right', borderaxespad=0, fontsize=15)
         print("Ventilation Graph created!")
         #save graph
         file_path = "Ventilation_Graph.png"
         fig.savefig(file_path)
+        
+        img = np.array(Image.open('tokei.png'))
+        graph = np.array(Image.open(file_path))
+        new_graph = np.where(img == [255, 255, 255, 255], graph, img)
+        pil_img = Image.fromarray(new_graph)
+        #print(pil_img.mode) #RGBA
+        pil_img.save(file_path)
+        
         message = "昨日1日のあなたの家の窓の開閉の記録のグラフです！"
         self.Visualization_send(file_path,message)
 

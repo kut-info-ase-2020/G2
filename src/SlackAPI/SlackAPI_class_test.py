@@ -29,14 +29,17 @@ Slack.Notification_HeatStroke(a,b)
 Slack.Notification_Sitting(b)
 Slack.Notification_Ventilation(b)
 
-x = np.array([[1000,0],[150,1],[250 , 0],[350,1],[200,0],[50,1], [400,0]])
+x = np.array([[1045,0],[1101,1],[1122 , 0],[1511,1],[1600,0],[1620,1], [2000,0]])
+y = np.array([[1022,0],[1301,1],[1311 , 0],[1320,1],[1344,0],[1559,1], [1602,0]])
 #x = np.array([[10:10:00,0],[13:13:00,1],[15:15:00 , 0],[16:16:00,1]])
 print(x)
 path = 'Sitting.csv'
-np.savetxt(path,x,fmt='%d')
-print(np.loadtxt(path,dtype='int64'))
-
+np.savetxt(path,x,fmt='%d',delimiter=',')
+print(np.loadtxt(path,dtype='int64',delimiter=','))
 Slack.Visualization_Sitting(path)
+
+path = 'Venti.csv'
+np.savetxt(path,y,fmt='%d',delimiter=',')
 Slack.Visualization_Ventilation(path)
 
 data = """date,Hum,Temp,WBGT
@@ -73,7 +76,7 @@ Slack.Visualization_HeatStroke(path)
 
 #print("SlackAPI開始！")
 #Slack.SlackAPI_Start()
-
+"""
 @RTMClient.run_on(event='message')
 def say_hello(**payload):
     data = payload['data']
@@ -104,3 +107,4 @@ tokenkey = os.environ["SLACK_API_TOKEN"]
 rtm_client = RTMClient(token = tokenkey)
 print("Hello_test")
 rtm_client.start()
+"""

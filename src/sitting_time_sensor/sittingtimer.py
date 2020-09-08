@@ -1,5 +1,5 @@
-# from sitting_time_sensor.pir_sensor import PIRSensor
-from sitting_time_sensor.stubs.dummysensor import PIRSensor
+from sitting_time_sensor.pir_sensor import PIRSensor
+# from sitting_time_sensor.stubs.dummysensor import PIRSensor
 from sched import scheduler
 from time import time
 from time import sleep
@@ -28,7 +28,7 @@ class SittingTimer:
     DATA_PATH = "./data/"
 
     def start(self):
-        self.pir_sensor = PIRSensor(port=26)
+        self.pir_sensor = PIRSensor(port=16)
         self.timer_loop()
 
     def timer_loop(self):
@@ -50,7 +50,7 @@ class SittingTimer:
                 timer_sched.run()
                 # if today < date.today():
                 if current + timedelta(minutes=1) < datetime.now():
-                    export_csv_name = SittingTimer.DATA_PATH + "window-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
+                    export_csv_name = SittingTimer.DATA_PATH + "sitting-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
                     self.periodical_report_func(export_csv_name)
                     today = date.today()
                     current = datetime.now().replace(microsecond=0)
@@ -103,8 +103,8 @@ class SittingTimer:
         average = int(0.5 + sum(read_values)/len(read_values))
         time_str = start_time.strftime("%H%M")
         status = None
-        if average == PIRSensor.Status.changed:
-            status = SittingTimer.sitting_status.closing
+        if average == PIRSensor.status.changed:
+            status = SittingTimer.sitting_status.sitting
         else:
             status = SittingTimer.sitting_status.standing
         return (start_time, SittingTimer.SittingData(time=time_str, flag=status))
@@ -135,9 +135,9 @@ class SittingTimer:
         self.periodical_report_func(path)
 
     def destroy(self):
-        self.sitting_timer_func = PIRSensor.no_use_func
+        self.sitting_timer_func = SittingTimer.no_use_func
         self.sitting_timer_interval = 0
-        self.stand_func = PIRSensor.no_use_func
-        self.periodical_report_func = PIRSensor.no_use_func
-        self.sitting_status_now = PIRSensor.window_status.closing
+        self.stand_func = SittingTimer.no_use_func
+        self.periodical_report_func = SittingTimer.no_use_func
+        self.sitting_status_now = SittingTimer.sitting_status.sitting
         self.pir_sensor.destroy()

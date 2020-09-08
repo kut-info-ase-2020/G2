@@ -1,9 +1,9 @@
 import os
 from sys import stderr
 from sitting_time_sensor.sittingtimer import SittingTimer
-# from SlackAPI.SlackAPI_class import SlackAPI
+from SlackAPI.SlackAPI_class import SlackAPI
 # from sitting_time_sensor.stubs.dummytimer import SittingTimer
-from sitting_time_sensor.stubs.dummyslack import SlackAPI
+# from sitting_time_sensor.stubs.dummyslack import SlackAPI
 
 class SittingTimeSystem:
     """SittingTimeSystem

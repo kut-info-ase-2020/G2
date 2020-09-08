@@ -6,7 +6,7 @@ from datetime import date
 import csv
 import os
 
-from SlackAPI import SlackAPI
+from SlackAPI.SlackAPI_class import SlackAPI
 from sched import scheduler
 
 class PIR_sensor():

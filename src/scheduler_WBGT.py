@@ -42,8 +42,8 @@ def timer_loop():
                 writer = csv.writer(f)
                 writer.writerow(['date','Hum','Temp','WBGT'])
             current = datetime.now().replace(microsecond=0)
-        # next_time = current + timedelta(minutes=30)
-        next_time = current + timedelta(minutes=1)
+        # next_time = next_time + timedelta(minutes=30)
+        next_time = next_time + timedelta(minutes=1)
 
 if __name__=='__main__':
     timer_loop()

@@ -6,7 +6,7 @@ from datetime import date
 import csv
 import os
 
-from SlackAPI import SlackAPI_class
+from SlackAPI import SlackAPI
 from sched import scheduler
 
 class PIR_sensor():
@@ -22,7 +22,7 @@ class PIR_sensor():
         self.alarm = datetime.now()
         self.sitting_start = datetime.now()
 
-        self.api = SlackAPI_class(
+        self.api = SlackAPI(
             token=os.environ['SLACK_API_TOKEN'], 
             channels = '#zikkenzyou_go'
             )

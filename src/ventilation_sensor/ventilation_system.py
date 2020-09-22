@@ -34,6 +34,7 @@ class VentilationSystem:
             print("Ventilation System Warning: " + csv_data_path + " don't exists!")
 
     def warning(self, hour, minutes):
+        VentilationSystem.weather.load_setting()
         rain = VentilationSystem.weather.is_raining()
         print("rainy?:", rain, file=stderr)
         if not rain:

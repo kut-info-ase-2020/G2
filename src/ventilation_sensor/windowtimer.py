@@ -21,7 +21,7 @@ class WindowOpeningTimer:
     window_opened_func = no_use_func
     periodical_report_func = no_use_func
     WindowStatus = namedtuple('WindowStatus', ['opening', 'closing'])
-    window_status = WindowStatus(opening=1, closing=0) # 暫定
+    window_status = WindowStatus(opening=0, closing=1) # 暫定
     window_status_now = window_status.closing
     WindowData = namedtuple('WindowData', ['time', 'flag'])
     closed_time = 0
@@ -48,8 +48,8 @@ class WindowOpeningTimer:
             while True:
                 timer_sched.enterabs(next_time.timestamp(), 1, self.measurement_next)
                 timer_sched.run()
-                if today < date.today():
-                # if current + timedelta(minutes=1) < datetime.now():
+                # if today < date.today():
+                if current + timedelta(minutes=15) < datetime.now():
                     export_csv_name = WindowOpeningTimer.DATA_PATH + "window-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
                     self.periodical_report_func(export_csv_name)
                     today = date.today()
@@ -58,8 +58,7 @@ class WindowOpeningTimer:
                     if not os.path.exists(WindowOpeningTimer.DATA_PATH + next_csv_name):
                         self.write_csv(next_csv_name, WindowOpeningTimer.WindowData(time=current.replace(hour=0, minute=0).strftime("%H%M"), flag=WindowOpeningTimer.window_status_now))
                 # next_time = next_time + timedelta(minutes=30)
-                # next_time = next_time + timedelta(minutes=1)
-                next_time = next_time + timedelta(seconds=30)
+                next_time = next_time + timedelta(minutes=1)
         except KeyboardInterrupt:
             self.destroy()
 
@@ -103,7 +102,7 @@ class WindowOpeningTimer:
         average = int(0.5 + sum(read_values)/len(read_values))
         time_str = start_time.strftime("%H%M")
         status = None
-        if average == ReedSwitch.mfstatus.strong:
+        if average == WindowOpeningTimer.window_status.closing:
             status = WindowOpeningTimer.window_status.closing
         else:
             status = WindowOpeningTimer.window_status.opening

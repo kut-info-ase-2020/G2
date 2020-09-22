@@ -8,6 +8,7 @@ client = slack.WebClient(token=os.environ['SLACK_API_TOKEN'])
 channels = '#zikkenzyou_go'
 #client = WebClient(ch_token)
 
+
 #client = slack.WebClient(token='')
 print("testnow")
 response = client.chat_postMessage(
@@ -32,3 +33,4 @@ print("upload now...")
 client = slack.WebClient(token=ch_token)
 response = client.conversations_list(**{'types': 'private_channel'})
 print(response.data['channels'])
+

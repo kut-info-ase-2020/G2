@@ -49,7 +49,7 @@ class SittingTimer:
                 timer_sched.enterabs(next_time.timestamp(), 1, self.measurement_next)
                 timer_sched.run()
                 # if today < date.today():
-                if current + timedelta(minutes=1) < datetime.now():
+                if current + timedelta(minutes=15) < datetime.now():
                     export_csv_name = SittingTimer.DATA_PATH + "sitting-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
                     self.periodical_report_func(export_csv_name)
                     today = date.today()
@@ -58,8 +58,7 @@ class SittingTimer:
                     if not os.path.exists(SittingTimer.DATA_PATH + next_csv_name):
                         self.write_csv(next_csv_name, SittingTimer.SittingData(time=current.replace(hour=0, minute=0).strftime("%H%M"), flag=SittingTimer.sitting_status_now))
                 # next_time = next_time + timedelta(minutes=30)
-                # next_time = next_time + timedelta(minutes=1)
-                next_time = next_time + timedelta(seconds=30)
+                next_time = next_time + timedelta(minutes=1)
         except KeyboardInterrupt:
             self.destroy()
 

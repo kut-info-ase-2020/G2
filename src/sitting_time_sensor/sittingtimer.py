@@ -33,40 +33,43 @@ class SittingTimer:
 
     def timer_loop(self):
         timer_sched = scheduler(time, sleep)
-        current = datetime.now()
+        start_time = datetime.now()
         # if current.minute < 30:
         #     current = current.replace(minute=0, second=0, microsecond=0)
         # else:
         #     current = current.replace(minute=30, second=0, microsecond=0)
-        current = current.replace(microsecond=0) # for test
-        next_time = current
+        start_time = start_time.replace(second=0, microsecond=0) # for test
+        next_time = start_time
+        current_time = start_time
         today = date.today()
         next_csv_name = "sitting-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
         if not os.path.exists(SittingTimer.DATA_PATH + next_csv_name):
-            self.write_csv(next_csv_name, SittingTimer.SittingData(time=current.replace(hour=0, minute=0).strftime("%H%M"), flag=SittingTimer.sitting_status_now))
+            self.write_csv(next_csv_name, SittingTimer.SittingData(time=start_time.replace(hour=0, minute=0).strftime("%H%M"), flag=SittingTimer.sitting_status_now))
         try:
             while True:
-                timer_sched.enterabs(next_time.timestamp(), 1, self.measurement_next)
+                timer_sched.enterabs(next_time.timestamp(), 1, self.measurement_next, argument=(current_time,))
                 timer_sched.run()
                 # if today < date.today():
-                if current + timedelta(minutes=15) < datetime.now():
+                if start_time + timedelta(minutes=15) < datetime.now():
                     export_csv_name = SittingTimer.DATA_PATH + "sitting-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
                     self.periodical_report_func(export_csv_name)
                     today = date.today()
-                    current = datetime.now().replace(microsecond=0)
+                    start_time = datetime.now().replace(microsecond=0)
                     next_csv_name = "sitting-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
                     if not os.path.exists(SittingTimer.DATA_PATH + next_csv_name):
-                        self.write_csv(next_csv_name, SittingTimer.SittingData(time=current.replace(hour=0, minute=0).strftime("%H%M"), flag=SittingTimer.sitting_status_now))
+                        self.write_csv(next_csv_name, SittingTimer.SittingData(time=start_time.replace(hour=0, minute=0).strftime("%H%M"), flag=SittingTimer.sitting_status_now))
                 # next_time = next_time + timedelta(minutes=30)
                 next_time = next_time + timedelta(minutes=1)
         except KeyboardInterrupt:
             self.destroy()
 
-    def measurement_next(self):
+    def measurement_next(self, previous_time):
         (date, result) = self.get_window_status()
         csv_name = "sitting-" + str(date.year) + "-" + str(date.month) + "-" + str(date.day) + ".csv"
         if result.flag == SittingTimer.sitting_status.sitting:
-            self.sitting_time += 30
+            current_time = datetime.now().replace(second=0, microsecond=0)
+            time_difference = current_time - previous_time
+            self.sitting_time += time_difference.seconds / 60
             if self.sitting_time > self.sitting_timer_interval:
                 self.sitting_timer_func(int(self.sitting_time/60), self.sitting_time%60)
         if self.sitting_status_now != result.flag:

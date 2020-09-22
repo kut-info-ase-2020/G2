@@ -70,10 +70,7 @@ class WindowOpeningTimer:
         if result.flag == WindowOpeningTimer.window_status.closing:
             current_time = datetime.now().replace(second=0, microsecond=0)
             time_difference = current_time - previous_time
-            if hasattr(time_difference, 'minutes'):
-                self.closed_time += time_difference.minutes
-            if hasattr(time_difference, 'hours'):
-                self.closed_time += time_difference.hours * 60
+            self.closed_time += time_difference.seconds / 60
             if self.closed_time > self.window_open_timer_interval:
                 self.window_open_timer_func(int(self.closed_time/60), self.closed_time%60)
         if self.window_status_now != result.flag:

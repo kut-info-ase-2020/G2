@@ -19,7 +19,8 @@ class VentilationSystem:
         slack_token = os.environ['SLACK_API_TOKEN']
         slack_channnel = '#zikkenzyou_go'
         VentilationSystem.ui = SlackAPI(slack_token, slack_channnel)
-        VentilationSystem.timer.set_time_over_callback(interval=30, func=self.warning)
+        # VentilationSystem.timer.set_time_over_callback(interval=30, func=self.warning)
+        VentilationSystem.timer.set_time_over_callback(interval=5, func=self.warning)
         VentilationSystem.timer.set_window_open_callback(func=self.resolved)
         VentilationSystem.timer.set_period_callback(func=self.periodical_report)
 

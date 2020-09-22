@@ -47,7 +47,7 @@ class WindowOpeningTimer:
             self.write_csv(next_csv_name, WindowOpeningTimer.WindowData(time=start_time.replace(hour=0, minute=0).strftime("%H%M"), flag=WindowOpeningTimer.window_status_now))
         try:
             while True:
-                timer_sched.enterabs(next_time.timestamp(), 1, self.measurement_next)
+                timer_sched.enterabs(next_time.timestamp(), 1, self.measurement_next, argument=(current_time,))
                 timer_sched.run()
                 # if today < date.today():
                 if start_time + timedelta(minutes=15) < datetime.now():
@@ -69,7 +69,11 @@ class WindowOpeningTimer:
         csv_name = "window-" + str(date.year) + "-" + str(date.month) + "-" + str(date.day) + ".csv"
         if result.flag == WindowOpeningTimer.window_status.closing:
             current_time = datetime.now().replace(second=0, microsecond=0)
-            self.closed_time += current_time - previous_time
+            time_difference = current_time - previous_time
+            if hasattr(time_difference, 'minutes'):
+                self.closed_time += time_difference.minutes
+            if hasattr(time_difference, 'hours'):
+                self.closed_time += time_difference.hours * 60
             if self.closed_time > self.window_open_timer_interval:
                 self.window_open_timer_func(int(self.closed_time/60), self.closed_time%60)
         if self.window_status_now != result.flag:

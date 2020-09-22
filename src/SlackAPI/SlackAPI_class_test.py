@@ -42,6 +42,15 @@ path = 'Venti.csv'
 np.savetxt(path,y,fmt='%d',delimiter=',')
 Slack.Visualization_Ventilation(path)
 
+path = 'csv_test.csv'
+y = np.loadtxt("csv_test.csv",dtype='int64',delimiter=',')
+Slack.Visualization_Ventilation(path)
+
+path = 'csv_test2.csv'
+y = np.loadtxt("csv_test.csv",dtype='int64',delimiter=',')
+Slack.Visualization_Ventilation(path)
+
+
 data = """date,Hum,Temp,WBGT
 2018-11-01 00:00:00,65,28,14
 2018-11-01 01:01:00,26,28,15

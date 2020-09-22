@@ -23,7 +23,7 @@ def say_hello(**payload):
     user = data['user']
     print(user)
     if 'subtype' not in data and 'help' in data['text']:
-        res_message =  "天気の情報に関する地域設定の方法について説明します,このサービスではコマンドを入力することで自分の地域を設定することができます\n地域名で設定:[set-location,{place-name}]\n緯度、経度で設定:[set-location,{ido},{keido}]\n{place-name}は[kochi][kami]のように半角英字で地名を入力すると地域情報を設定できます！\n{ido}{keido}は緯度経度の値をそのまま半角数字で入力してください！\n地域設定が成功した場合はリプライでメッセージを送信します！\n地域設定の例:Set-Placename,kochi\n緯度経度設定の例:Set-Location,30,30"
+        res_message =  "Here's how to set up a region for weather information.\nThis service allows you to set up your own region by typing a command\nSet by region name:[set-location,{place-name}]\nSet by latitude and longitude:[set-location,{ido},{keido}]\n{place-name} is [kochi][kami]のように半角英字で地名を入力すると地域情報を設定できます！\n{ido}{keido}は緯度経度の値をそのまま半角数字で入力してください！\n地域設定が成功した場合はリプライでメッセージを送信します！\n地域設定の例:Set-Placename,kochi\n緯度経度設定の例:Set-Location,30,30\n[Change-Mode,{mode-name}]\n地域設定のモードを変更できます。地域名モード:[Change-mode,PlaceName],緯度経度モード:[Change-mode,Location]"
         try:
             response = web_client.chat_postMessage(
                 channel=channel_id,
@@ -71,6 +71,52 @@ def say_hello(**payload):
                 text=weather_result_message,
                 thread_ts=thread_ts
             )
+        except SlackApiError as e:
+            # You will get a SlackApiError if "ok" is False
+            assert e.response["ok"] is False
+            assert e.response["error"]  # str like 'invalid_auth', 'channel_not_found'
+            print(f"Got an error: {e.response['error']}")
+    elif  'subtype' not in data and 'Change-Mode,' in data['text']:
+        s = message.split(',')
+        print(s)
+        mode = s[1]
+        #keido = s[2]
+        print(mode)
+        weather_result_message = weatherAPI.change_mode(mode)
+        print(weather_result_message)
+        try:
+            response = web_client.chat_postMessage(
+            channel=channel_id,
+            #text="地域情報を設定しました！",
+            text=weather_result_message,
+            thread_ts=thread_ts
+        )
+        except SlackApiError as e:
+            # You will get a SlackApiError if "ok" is False
+            assert e.response["ok"] is False
+            assert e.response["error"]  # str like 'invalid_auth', 'channel_not_found'
+            print(f"Got an error: {e.response['error']}")
+    elif  'subtype' not in data and 'Check-Mode' in data['text']:
+        #s = message.split(',')
+        #print(s)
+        #mode = s[1]
+        #keido = s[2]
+        #print(mode)
+        mode = weatherAPI.mode
+        print(mode)
+        #weather_result_message = weatherAPI.mode
+        if mode == 0:
+        	weather_result_message="Current Mode is PlaceName Mode!"
+        else:
+        	weather_result_message="Current Mode is Location Mode!"
+        print(weather_result_message)
+        try:
+            response = web_client.chat_postMessage(
+            channel=channel_id,
+            #text="地域情報を設定しました！",
+            text=weather_result_message,
+            thread_ts=thread_ts
+        )
         except SlackApiError as e:
             # You will get a SlackApiError if "ok" is False
             assert e.response["ok"] is False

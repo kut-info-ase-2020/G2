@@ -136,7 +136,7 @@ class SlackAPI:
         file_path = "Sitting_Graph.png"
         fig.savefig(file_path)
         
-        img = np.array(Image.open('tokei.png'))
+        img = np.array(Image.open('SlackAPI/tokei.png'))
         graph = np.array(Image.open(file_path))
         new_graph = np.where(img == [255, 255, 255, 255], graph, img)
         pil_img = Image.fromarray(new_graph)
@@ -201,7 +201,7 @@ class SlackAPI:
         file_path = "Ventilation_Graph.png"
         fig.savefig(file_path)
         
-        img = np.array(Image.open('tokei.png'))
+        img = np.array(Image.open('SlackAPI/tokei.png'))
         graph = np.array(Image.open(file_path))
         new_graph = np.where(img == [255, 255, 255, 255], graph, img)
         pil_img = Image.fromarray(new_graph)

@@ -5,12 +5,19 @@ from datetime import datetime, timedelta, timezone
 from datetime import datetime, timedelta
 import statistics
 import time
+import os
 
-#import SlackAPI_class
+from SlackAPI import SlackAPI_class
 #token=os.environ['SLACK_API_TOKEN']
 #channels = '#zikkenzyou_go'
 
-def calWBGT():
+api = SlackAPI_class.SlackAPI(
+    token=os.environ['SLACK_API_TOKEN'], 
+    channels = '#zikkenzyou_go'
+    )
+
+def calWBGT(csv_path):
+
     #センシングを行う回数
     countSensing = 10
     #故障時に備えたループの最大回数
@@ -44,21 +51,22 @@ def calWBGT():
             #データの中央値を取り出す
             a = statistics.median(dataWBGT)
             b = statistics.median(datatemperature)
-            c = statistics.median(datahumidity)
-            with open('dataWBGT.csv', 'a') as f:
+            c = statistics.median(datahumidity)d
+            with open(csv_path, 'a') as f:
                 writer = csv.writer(f)
+
                 writer.writerow([datatime, c, b, a])
             if a > 25:
-                #api = SlackAPI_class.SlackAPI(token,channels)
-                #api.Notification_Heatstroke(b,c)
+                api.Notification_HeatStroke(b,c)
                 #WBGTが危険の場合、1を返す
                 return 1
             else:
-                #api = SlackAPI_class.SlackAPI(token,channels)
-                #api.Notification_Heatstroke(b,c)
+                """
+                api.Notification_HeatStroke(b,c)
+                """
                 return 0
         if countMaxSensing == 0:
-            with open('dataWBGT.csv', 'a') as f:
+            with open(csv_path, 'a') as f:
                 writer = csv.writer(f)
                 writer.writerow([datatime, -1, -1, -1])
             return -1

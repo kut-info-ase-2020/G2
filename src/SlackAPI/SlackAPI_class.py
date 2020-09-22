@@ -130,7 +130,7 @@ class SlackAPI:
         centre_circle = plt.Circle((0,0),0.6,color='black', fc='white',linewidth=1.25)
         fig = plt.gcf()
         fig.gca().add_artist(centre_circle)
-        plt.legend(st,bbox_to_anchor=(1.3, 1.1), loc='upper right', borderaxespad=0, fontsize=15)
+        plt.legend(st,bbox_to_anchor=(1.3, 1.1), loc='upper right', labelcolor=colorlist_time,borderaxespad=0, fontsize=15)
         print("Sitting Graph created!")
         #save graph
         file_path = "Sitting_Graph.png"
@@ -195,7 +195,7 @@ class SlackAPI:
         centre_circle = plt.Circle((0,0),0.6,color='black', fc='white',linewidth=1.25)
         fig = plt.gcf()
         fig.gca().add_artist(centre_circle)
-        plt.legend(st,bbox_to_anchor=(1.3, 1.1), loc='upper right', borderaxespad=0, fontsize=15)
+        plt.legend(st,bbox_to_anchor=(1.3, 1.1), loc='upper right',labelcolor=colorlist_time, borderaxespad=0, fontsize=15)
         print("Ventilation Graph created!")
         #save graph
         file_path = "Ventilation_Graph.png"

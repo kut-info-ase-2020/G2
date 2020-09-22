@@ -8,6 +8,7 @@ from slack import RTMClient
 import requests
 import matplotlib as mpl
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 from PIL import Image
 from slack.errors import SlackApiError
 
@@ -125,12 +126,16 @@ class SlackAPI:
         plt.pie(time_array,colors = colorlist,startangle=90,counterclock=False)
         label_time = ["AM","PM"]
         x_time = np.array([100 , 100])
+        print(col1)
         colorlist_time = ["pink","magenta"]
         plt.pie(x_time, labels=label_time,colors = colorlist_time,startangle=90,counterclock=False,radius = 0.7,labeldistance=0.5)
         centre_circle = plt.Circle((0,0),0.6,color='black', fc='white',linewidth=1.25)
         fig = plt.gcf()
         fig.gca().add_artist(centre_circle)
-        plt.legend(st,bbox_to_anchor=(1.3, 1.1), loc='upper right', labelcolor=colorlist_time,borderaxespad=0, fontsize=15)
+        patch_list = []
+        patch_list.append(mpatches.Patch(color=col1,label = st[0]))
+        patch_list.append(mpatches.Patch(color=col2,label = st[1]))
+        plt.legend(st,bbox_to_anchor=(1.3, 1.1), loc='upper right', handles = patch_list,borderaxespad=0, fontsize=15)
         print("Sitting Graph created!")
         #save graph
         file_path = "Sitting_Graph.png"
@@ -195,7 +200,10 @@ class SlackAPI:
         centre_circle = plt.Circle((0,0),0.6,color='black', fc='white',linewidth=1.25)
         fig = plt.gcf()
         fig.gca().add_artist(centre_circle)
-        plt.legend(st,bbox_to_anchor=(1.3, 1.1), loc='upper right',labelcolor=colorlist_time, borderaxespad=0, fontsize=15)
+        patch_list = []
+        patch_list.append(mpatches.Patch(color=col1,label = st[0]))
+        patch_list.append(mpatches.Patch(color=col2,label = st[1]))
+        plt.legend(st,bbox_to_anchor=(1.3, 1.1), loc='upper right', handles = patch_list,borderaxespad=0, fontsize=15)
         print("Ventilation Graph created!")
         #save graph
         file_path = "Ventilation_Graph.png"

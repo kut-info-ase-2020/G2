@@ -3,7 +3,6 @@ from slack import RTMClient
 from slack.errors import SlackApiError
 
 import sys
-sys.path.append('../')
 from SlackAPI import SlackAPI_class
 
 sys.path.append('../weatherAPI/')

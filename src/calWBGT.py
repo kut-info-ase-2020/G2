@@ -51,7 +51,7 @@ def calWBGT(csv_path):
             #データの中央値を取り出す
             a = statistics.median(dataWBGT)
             b = statistics.median(datatemperature)
-            c = statistics.median(datahumidity)d
+            c = statistics.median(datahumidity)
             with open(csv_path, 'a') as f:
                 writer = csv.writer(f)
 

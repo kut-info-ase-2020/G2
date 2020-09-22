@@ -7,6 +7,7 @@ import requests
 import matplotlib
 from slack.errors import SlackApiError
 import SlackAPI_class
+from slack import RTMClient
 import io
 
 
@@ -28,15 +29,27 @@ Slack.Notification_HeatStroke(a,b)
 Slack.Notification_Sitting(b)
 Slack.Notification_Ventilation(b)
 
-x = np.array([[1000,0],[150,1],[250 , 0],[350,1],[200,0],[50,1], [400,0]])
+x = np.array([[1045,0],[1101,1],[1122 , 0],[1511,1],[1600,0],[1620,1], [2000,0]])
+y = np.array([[1022,0],[1301,1],[1311 , 0],[1320,1],[1344,0],[1559,1], [1602,0]])
 #x = np.array([[10:10:00,0],[13:13:00,1],[15:15:00 , 0],[16:16:00,1]])
 print(x)
 path = 'Sitting.csv'
-np.savetxt(path,x,fmt='%d')
-print(np.loadtxt(path,dtype='int64'))
-
+np.savetxt(path,x,fmt='%d',delimiter=',')
+print(np.loadtxt(path,dtype='int64',delimiter=','))
 Slack.Visualization_Sitting(path)
+
+path = 'Venti.csv'
+np.savetxt(path,y,fmt='%d',delimiter=',')
 Slack.Visualization_Ventilation(path)
+
+path = 'csv_test.csv'
+y = np.loadtxt("csv_test.csv",dtype='int64',delimiter=',')
+Slack.Visualization_Ventilation(path)
+
+path = 'csv_test2.csv'
+y = np.loadtxt("csv_test.csv",dtype='int64',delimiter=',')
+Slack.Visualization_Ventilation(path)
+
 
 data = """date,Hum,Temp,WBGT
 2018-11-01 00:00:00,65,28,14
@@ -70,4 +83,37 @@ df.to_csv(path)
 Slack.Visualization_HeatStroke(path)
 
 
+#print("SlackAPI開始！")
+#Slack.SlackAPI_Start()
+"""
+@RTMClient.run_on(event='message')
+def say_hello(**payload):
+    data = payload['data']
+    print(data)
+    web_client = payload['web_client']
+    rtm_client = payload['rtm_client']
+    #if 'text' in data and 'Hello' in data.get('text', []):
+    message = data.get('text')
+    print(message)
+    channel_id = data['channel']
+    thread_ts = data['ts']
+    user = data['user']
+    
 
+    try:
+        response = web_client.chat_postMessage(
+            channel=channel_id,
+            text="地域情報を設定しました！",
+            thread_ts=thread_ts
+        )
+    except SlackApiError as e:
+        # You will get a SlackApiError if "ok" is False
+        assert e.response["ok"] is False
+        assert e.response["error"]  # str like 'invalid_auth', 'channel_not_found'
+        print(f"Got an error: {e.response['error']}")
+
+tokenkey = os.environ["SLACK_API_TOKEN"]
+rtm_client = RTMClient(token = tokenkey)
+print("Hello_test")
+rtm_client.start()
+"""

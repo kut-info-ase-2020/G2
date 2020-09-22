@@ -17,6 +17,7 @@ api = SlackAPI_class.SlackAPI(
     )
 
 def calWBGT(csv_path):
+
     #センシングを行う回数
     countSensing = 10
     #故障時に備えたループの最大回数
@@ -50,7 +51,7 @@ def calWBGT(csv_path):
             #データの中央値を取り出す
             a = statistics.median(dataWBGT)
             b = statistics.median(datatemperature)
-            c = statistics.median(datahumidity)
+            c = statistics.median(datahumidity)d
             with open(csv_path, 'a') as f:
                 writer = csv.writer(f)
 

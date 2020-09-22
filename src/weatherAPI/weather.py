@@ -31,7 +31,7 @@ class Weather:
                 "units": self.units,
                 "API_KEY": self.API_KEY,
             }
-            with open(self.setting_list_path), 'w') as outfile:
+            with open(self.setting_list_path, 'w') as outfile:
                 json.dump(self.setting_list, outfile)
 
     def get_weather(self):

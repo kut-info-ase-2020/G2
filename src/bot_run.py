@@ -5,8 +5,8 @@ from slack.errors import SlackApiError
 import sys
 from SlackAPI import SlackAPI_class
 
-sys.path.append('../weatherAPI/')
-import weather
+
+from weatherAPI import weather
 
 @RTMClient.run_on(event='message')
 def say_hello(**payload):

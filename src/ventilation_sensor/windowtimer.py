@@ -21,7 +21,7 @@ class WindowOpeningTimer:
     window_opened_func = no_use_func
     periodical_report_func = no_use_func
     WindowStatus = namedtuple('WindowStatus', ['opening', 'closing'])
-    window_status = WindowStatus(opening=1, closing=0) # 暫定
+    window_status = WindowStatus(opening=0, closing=1) # 暫定
     window_status_now = window_status.closing
     WindowData = namedtuple('WindowData', ['time', 'flag'])
     closed_time = 0
@@ -103,7 +103,7 @@ class WindowOpeningTimer:
         average = int(0.5 + sum(read_values)/len(read_values))
         time_str = start_time.strftime("%H%M")
         status = None
-        if average == ReedSwitch.mfstatus.strong:
+        if average == WindowOpeningTimer.window_status.closing:
             status = WindowOpeningTimer.window_status.closing
         else:
             status = WindowOpeningTimer.window_status.opening

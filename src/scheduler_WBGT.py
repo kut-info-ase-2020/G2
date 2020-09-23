@@ -31,19 +31,22 @@ def timer_loop():
         )
 
     while True:
-        timer_sched.enterabs(next_time.timestamp(), 1, calWBGT.calWBGT, kwargs={'csv_path': export_csv_name})
-        timer_sched.run()
-        # if today < date.today():
-        if current + timedelta(minutes=30) < datetime.now():
+        if today < date.today():
+        # if current + timedelta(minutes=30) < datetime.now():
             api.Visualization_HeatStroke(path=export_csv_name)
             today = date.today()
             export_csv_name = "window-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
             with open(export_csv_name, 'w') as f:
                 writer = csv.writer(f)
                 writer.writerow(['date','Hum','Temp','WBGT'])
-            current = datetime.now().replace(microsecond=0)
-        # next_time = next_time + timedelta(minutes=30)
-        next_time = next_time + timedelta(minutes=1)
+            current = datetime.now()
+            current = current.replace(microsecond=0) # for test
+            
+        timer_sched.enterabs(next_time.timestamp(), 1, calWBGT.calWBGT, kwargs={'csv_path': export_csv_name})
+        timer_sched.run()
+        current = next_time
+        next_time = next_time + timedelta(minutes=10)
+        # next_time = next_time + timedelta(minutes=1)
 
 if __name__=='__main__':
     timer_loop()

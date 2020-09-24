@@ -19,7 +19,7 @@ def timer_loop():
     current = current.replace(microsecond=0) # for test
     next_time = current
     today = date.today()
-    export_csv_name = "window-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
+    export_csv_name = "data/heatstroke-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
     if not os.path.exists(export_csv_name):
         with open(export_csv_name, 'a') as f:
             writer = csv.writer(f)
@@ -35,7 +35,7 @@ def timer_loop():
         # if current + timedelta(minutes=30) < datetime.now():
             api.Visualization_HeatStroke(path=export_csv_name)
             today = date.today()
-            export_csv_name = "window-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
+            export_csv_name = "data/heatstroke-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
             with open(export_csv_name, 'w') as f:
                 writer = csv.writer(f)
                 writer.writerow(['date','Hum','Temp','WBGT'])

@@ -91,7 +91,7 @@ class SlackAPI:
         #label
         st = ["Standing","Sitting"]
         colorlist = np.zeros((size,3),np.float64)
-        start_time = int(array[0,0])
+        #start_time = int(array[0,0])
         now_time = 0
         time_array = [0]
         label_list = ['Standing']
@@ -160,7 +160,7 @@ class SlackAPI:
         #label
         st = ["Close","Open"]
         colorlist = np.zeros((size,3),np.float64)
-        start_time = int(array[0,0])
+        #start_time = int(array[0,0])
         now_time = 0
         time_array = [0]
         label_list = ['Close']

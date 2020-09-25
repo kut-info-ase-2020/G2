@@ -31,6 +31,8 @@ def timer_loop():
         )
 
     while True:
+        timer_sched.enterabs(next_time.timestamp(), 1, calWBGT.calWBGT, kwargs={'csv_path': export_csv_name})
+
         if today < date.today():
         # if current + timedelta(minutes=30) < datetime.now():
             api.Visualization_HeatStroke(path=export_csv_name)
@@ -41,8 +43,7 @@ def timer_loop():
                 writer.writerow(['date','Hum','Temp','WBGT'])
             current = datetime.now()
             current = current.replace(microsecond=0) # for test
-            
-        timer_sched.enterabs(next_time.timestamp(), 1, calWBGT.calWBGT, kwargs={'csv_path': export_csv_name})
+        
         timer_sched.run()
         current = next_time
         next_time = next_time + timedelta(minutes=10)

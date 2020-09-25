@@ -37,8 +37,8 @@ def timer_loop():
         # next_time = next_time + timedelta(minutes=1)
 
 def run_calWBGT(next_time, today, current, csv_path):
-    # if today < date.today():
-    if current + timedelta(minutes=10) < datetime.now():
+    if today < date.today():
+    # if current + timedelta(minutes=10) < datetime.now():
         api = SlackAPI(
             token=os.environ['SLACK_API_TOKEN'], 
             channels = '#zikkenzyou_go'
@@ -51,7 +51,7 @@ def run_calWBGT(next_time, today, current, csv_path):
             writer.writerow(['date','Hum','Temp','WBGT'])
         current = datetime.now()
         current = current.replace(microsecond=0) # for test
-    #calWBGT.calWBGT(csv_path)
+    calWBGT.calWBGT(csv_path)
 
 
 if __name__=='__main__':

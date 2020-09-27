@@ -53,7 +53,7 @@ class Weather:
 
     def is_raining(self):
         weather = self.get_weather()
-        if weather == "Rain":
+        if weather == "Rain" or weather == "Snow" or weather == "Thunderstorm":
             return True
         else:
             return False

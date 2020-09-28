@@ -58,7 +58,7 @@ class SlackAPI:
     def Notification_HeatStroke(self,Temp,Hum):
         try:
             print("Heatstroke notification message create...")
-            message = "Heat stroke is a danger! Open a window, turn on the air conditioner, etc.!\nTemprerature is "+ str(Temp) + ".\nHumidity is " + str(Hum) + "."
+            message = "Warning: You have a high risk of heat stroke!\nHow to avoid heat stroke: use fans or air conditioners, drink plenty of water, etc.\nsee:https://www.city.minato.tokyo.jp/kuse/koho/minatomonthly/170601/heat-stroke-prevention.html\nTemprerature is "+ str(Temp) + ".\nHumidity is " + str(Hum) + "."
             self.Notification_send(message)
         except IndexError:
             print("Error! Bad argument.")

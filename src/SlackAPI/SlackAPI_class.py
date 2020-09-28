@@ -82,7 +82,17 @@ class SlackAPI:
 
     def Visualization_Sitting(self,path):
         array = np.loadtxt(path,delimiter=',')
+        print(array.shape)
         print(array)
+        #final  = np.zeros((1,2),np.float64)
+        #final[0,:] = [2358,0]
+        #print(final.shape)
+
+
+        #array = np.insert(array,array.shape[0]-1,[2359,1],axis=0)
+        #array = np.concatenate([array,final],0)
+        #array  = np.append(array,final,axis = 0)
+        #print(array)
         size = array.shape[0]
         #blue
         col1 = np.array([0.0,156/255,209/255])
@@ -90,16 +100,21 @@ class SlackAPI:
         col2 = np.array([255/255,217/255,0.0])
         #label
         st = ["Standing","Sitting"]
-        colorlist = np.zeros((size,3),np.float64)
+        colorlist = np.zeros((size+1,3),np.float64)
         #start_time = int(array[0,0])
         now_time = 0
-        time_array = [0] 
+        time_array = [] 
         label_list = ['Standing']
         #create label and color list
         for w in range(size+1):
             if w == size:
                 time_array.append(2398 - now_time)
+                colorlist[w,:] =  col1[:]
                 label_list.append(st[0])
+
+                #time_array.append(1)
+                #colorlist[w+1,:] =  col1[:]
+                #label_list.append(st[0])
                 break
             num = int(array[w,0])
             minute = num %100
@@ -121,6 +136,8 @@ class SlackAPI:
                 label_list.append(st[1])
         #create Graph
         print(time_array)
+        #print(time_array.shape)
+        print(colorlist)
         print(label_list)
         plt.figure()
         plt.pie(time_array,colors = colorlist,startangle=90,counterclock=False)
@@ -162,7 +179,7 @@ class SlackAPI:
         colorlist = np.zeros((size,3),np.float64)
         #start_time = int(array[0,0])
         now_time = 0
-        time_array = [0]
+        time_array = []
         label_list = ['Close']
         #create label and color list
         for w in range(size+1):

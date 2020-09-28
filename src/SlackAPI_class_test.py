@@ -23,14 +23,14 @@ Slack.send_message(message)
 #files = {'file': open("test.png", 'rb')}
 #sensor_type = "PIR"
 #text = "you must stand up!"
-a = 1
-b = 2
+a = 180
+b = 90
 Slack.Notification_HeatStroke(a,b)
 Slack.Notification_Sitting(b)
 Slack.Notification_Ventilation(b)
 
-x = np.array([[1045,0],[1101,1],[1122 , 0],[1511,1],[1600,0],[1620,1], [2000,0]])
-y = np.array([[1022,0],[1301,1],[1311 , 0],[1320,1],[1344,0],[1559,1], [1602,0]])
+x = np.array([[000,0],[1045,0],[1101,1],[1122 , 0],[1511,1],[1600,0],[1620,1], [2000,0]])
+y = np.array([[000,0],[1022,0],[1301,1],[1311 , 0],[1320,1],[1344,0],[1559,1], [1602,0]])
 #x = np.array([[10:10:00,0],[13:13:00,1],[15:15:00 , 0],[16:16:00,1]])
 print(x)
 path = 'Sitting.csv'
@@ -76,7 +76,7 @@ data = """date,Hum,Temp,WBGT
 2018-11-01 21:21:00,98,18,19
 2018-11-01 22:22:00,48,16,14
 2018-11-01 23:23:00,18,11,9
-2018-11-01 00:00:00,18,11,9"""
+2018-11-02 00:00:00,18,11,9"""
 df = pd.read_csv(io.StringIO(data), parse_dates=[0])
 path = 'HeatStroke.csv'
 df.to_csv(path)

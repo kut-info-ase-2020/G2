@@ -42,13 +42,13 @@ path = 'Venti.csv'
 np.savetxt(path,y,fmt='%d',delimiter=',')
 Slack.Visualization_Ventilation(path)
 
-path = 'csv_test.csv'
-y = np.loadtxt("csv_test.csv",dtype='int64',delimiter=',')
-Slack.Visualization_Ventilation(path)
+#path = 'csv_test.csv'
+#y = np.loadtxt("csv_test.csv",dtype='int64',delimiter=',')
+#Slack.Visualization_Ventilation(path)
 
-path = 'csv_test2.csv'
-y = np.loadtxt("csv_test.csv",dtype='int64',delimiter=',')
-Slack.Visualization_Ventilation(path)
+#path = 'csv_test2.csv'
+#y = np.loadtxt("csv_test.csv",dtype='int64',delimiter=',')
+#Slack.Visualization_Ventilation(path)
 
 
 data = """date,Hum,Temp,WBGT
@@ -75,7 +75,8 @@ data = """date,Hum,Temp,WBGT
 2018-11-01 20:20:00,21,20,18
 2018-11-01 21:21:00,98,18,19
 2018-11-01 22:22:00,48,16,14
-2018-11-01 23:23:00,18,11,9"""
+2018-11-01 23:23:00,18,11,9
+2018-11-01 00:00:00,18,11,9"""
 df = pd.read_csv(io.StringIO(data), parse_dates=[0])
 path = 'HeatStroke.csv'
 df.to_csv(path)

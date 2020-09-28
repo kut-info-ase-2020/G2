@@ -22,7 +22,7 @@ def say_hello(**payload):
     user = data['user']
     print(user)
     if  'subtype' not in data and 'help' in data['text']:
-        res_message =  "Here's how to set up a region for weather information.\nThis service allows you to set up your own region by typing a command\nSet by region name:[set-Placename,{place-name}]\nSet by latitude and longitude:[set-location,{ido},{keido}]\n{place-name} is [kochi][kami]のように半角英字で地名を入力すると地域情報を設定できます！\n{ido}{keido}は緯度経度の値をそのまま半角数字で入力してください！\n地域設定が成功した場合はリプライでメッセージを送信します！\n地域設定の例:Set-Placename,kochi\n緯度経度設定の例:Set-Location,30,30\n[Change-Mode,{mode-name}]\n地域設定のモードを変更できます。地域名モード:[Change-mode,PlaceName],緯度経度モード:[Change-mode,Location]\n[Check-Mode]:Check Mode type"
+        res_message =  "Here's how to set up a region for weather information.\nThis service allows you to set up your own region by typing a command.\n\n[set-Placename,{place-name}]\nSet by region name\n{place-name} is Enter a place name like tokyo,kochi\nfor example:Set-Placename,kochi\n\n[set-location,{latitude},{longitude}]\nSet by latitude and longitude\n{latitude}{longitude} is input a number of latitude and longitude\nfor example:Set-Location,30,30\n\n[Change-Mode,{mode-name}]\nChange mode,placemode or location\nPlaceName mode:[Change-mode,PlaceName]\nLocation mode:[Change-mode,Location]\n\n[Check-Mode]:Check Current Mode type"
         try:
             response = web_client.chat_postMessage(
                 channel=channel_id,
@@ -142,7 +142,7 @@ print("class test now...")
 
 Slack = SlackAPI_class.SlackAPI(token,channels)
 
-message = "こんにちは、ここでは換気通知システムで用いられるあなたの地域設定が行えます。[help]と入力してチュートリアルをご確認ください"
+message = "Hello.Here you can set up your region to be used in the ventilation notification system.\n[help] is Check the tutorial."
 Slack.send_message(message)
 
 message = 'kochi'

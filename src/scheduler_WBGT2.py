@@ -1,4 +1,4 @@
-#import calWBGT
+import calWBGT
 from SlackAPI.SlackAPI_class import SlackAPI
 from sched import scheduler
 import os
@@ -26,11 +26,12 @@ def timer_loop():
             writer.writerow(['date','Hum','Temp','WBGT'])
 
     while True:
-        timer_sched.enterabs(next_time.timestamp(), 1, run_calWBGT,
-                             kwargs={'next_time': next_time,
-                                     'today': today,
-                                     'current': current,
-                                     'csv_path': export_csv_name,})
+        current = timer_sched.enterabs(
+                    next_time.timestamp(), 1, run_calWBGT,
+                    kwargs={'next_time': next_time,
+                            'today': today,
+                            'current': current,
+                            'csv_path': export_csv_name,})
         timer_sched.run()
         #current = next_time
         next_time = next_time + timedelta(minutes=10)
@@ -52,6 +53,7 @@ def run_calWBGT(next_time, today, current, csv_path):
         current = datetime.now()
         current = current.replace(microsecond=0) # for test
     calWBGT.calWBGT(csv_path)
+    return current
 
 
 if __name__=='__main__':

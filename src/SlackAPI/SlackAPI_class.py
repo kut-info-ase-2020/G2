@@ -43,25 +43,25 @@ class SlackAPI:
     def Notification_Sitting(self,time):
         try:
             print("PIR notification message create...")
-            message = "椅子に座りすぎです！椅子から立ち、軽い運動を試みてください！\n連続で座っていた時間 = " + str(time) + "分"
+            message = "You're sitting in your chair too much! Stand up out of your chair and try some light exercise!\nSitting time is " + str(time) + " minute."
             self.Notification_send(message)
         except IndexError:
-            print("エラー！引数に不正があります")
+            print("Error! Bad argument.")
     def Notification_Ventilation(self,time):
         try:
             print("Ventilate notification message create...")
-            message = "しばらくの間換気が行われていません！窓を開けて換気を試みてください！\n窓が閉まっていた時間 = " + str(time) + "分"
+            message = "It hasn't been ventilated in a while! Open a window and try to ventilate it!\nclosing window time is " + str(time) + " minute."
             self.Notification_send(message)
         except IndexError:
-            print("エラー！引数に不正があります")
+            print("Error! Bad argument.")
 
     def Notification_HeatStroke(self,Temp,Hum):
         try:
             print("Heatstroke notification message create...")
-            message = "熱中症の危険があります！窓を開ける、エアコンを起動するなどの対策を行ってください！\n室温 = "+ str(Temp) + "度\n湿度 = " + str(Hum) + "度"
+            message = "Warning: You have a high risk of heat stroke!\nHow to avoid heat stroke: use fans or air conditioners, drink plenty of water, etc.\nsee:https://www.city.minato.tokyo.jp/kuse/koho/minatomonthly/170601/heat-stroke-prevention.html\nTemprerature is "+ str(Temp) + ".\nHumidity is " + str(Hum) + "."
             self.Notification_send(message)
         except IndexError:
-            print("エラー！引数に不正があります")
+            print("Error! Bad argument.")
         
     def Visualization_send(self,image_path,text):
         try:
@@ -82,7 +82,17 @@ class SlackAPI:
 
     def Visualization_Sitting(self,path):
         array = np.loadtxt(path,delimiter=',')
+        print(array.shape)
         print(array)
+        #final  = np.zeros((1,2),np.float64)
+        #final[0,:] = [2358,0]
+        #print(final.shape)
+
+
+        #array = np.insert(array,array.shape[0]-1,[2359,1],axis=0)
+        #array = np.concatenate([array,final],0)
+        #array  = np.append(array,final,axis = 0)
+        #print(array)
         size = array.shape[0]
         #blue
         col1 = np.array([0.0,156/255,209/255])
@@ -90,16 +100,21 @@ class SlackAPI:
         col2 = np.array([255/255,217/255,0.0])
         #label
         st = ["Standing","Sitting"]
-        colorlist = np.zeros((size,3),np.float64)
+        colorlist = np.zeros((size+1,3),np.float64)
         #start_time = int(array[0,0])
         now_time = 0
-        time_array = [0]
+        time_array = [] 
         label_list = ['Standing']
         #create label and color list
         for w in range(size+1):
             if w == size:
                 time_array.append(2398 - now_time)
+                colorlist[w,:] =  col1[:]
                 label_list.append(st[0])
+
+                #time_array.append(1)
+                #colorlist[w+1,:] =  col1[:]
+                #label_list.append(st[0])
                 break
             num = int(array[w,0])
             minute = num %100
@@ -121,6 +136,8 @@ class SlackAPI:
                 label_list.append(st[1])
         #create Graph
         print(time_array)
+        #print(time_array.shape)
+        print(colorlist)
         print(label_list)
         plt.figure()
         plt.pie(time_array,colors = colorlist,startangle=90,counterclock=False)
@@ -147,7 +164,7 @@ class SlackAPI:
         pil_img = Image.fromarray(new_graph)
         #print(pil_img.mode) #RGBA
         pil_img.save(file_path)
-        message = "昨日1日のあなたの座っていた時間の記録のグラフです！"
+        message = "Here's a graph of your sitting time at yesterday!"
         self.Visualization_send(file_path,message)
 
     def Visualization_Ventilation(self,path):
@@ -162,7 +179,7 @@ class SlackAPI:
         colorlist = np.zeros((size,3),np.float64)
         #start_time = int(array[0,0])
         now_time = 0
-        time_array = [0]
+        time_array = []
         label_list = ['Close']
         #create label and color list
         for w in range(size+1):
@@ -216,7 +233,7 @@ class SlackAPI:
         #print(pil_img.mode) #RGBA
         pil_img.save(file_path)
         
-        message = "昨日1日のあなたの家の窓の開閉の記録のグラフです！"
+        message = "Here's a graph of your house's window openings and closings at yesterday!"
         self.Visualization_send(file_path,message)
 
     def Visualization_HeatStroke(self,path):
@@ -237,7 +254,7 @@ class SlackAPI:
         #save graph
         file_path = "HeatStroke_Graph.png"
         plt.savefig(file_path)
-        message = "昨日1日のあなたの家の気温、湿度、WBGTのグラフです！"
+        message = "Here's a graph of your home's temperature, humidity and WBGT at yesterday!"
         self.Visualization_send(file_path,message)
 
 

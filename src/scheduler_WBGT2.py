@@ -26,7 +26,7 @@ def timer_loop():
             writer.writerow(['date','Hum','Temp','WBGT'])
 
     while True:
-        ctimer_sched.enterabs(
+        timer_sched.enterabs(
             next_time.timestamp(), 1, run_calWBGT,
             kwargs={'next_time': next_time,
                     'today': today,
@@ -37,7 +37,7 @@ def timer_loop():
         #if current + timedelta(minutes=10) < datetime.now():
             current = datetime.now()
             current = current.replace(microsecond=0) # for test
-            
+
         next_time = next_time + timedelta(minutes=10)
         # next_time = next_time + timedelta(minutes=1)
 

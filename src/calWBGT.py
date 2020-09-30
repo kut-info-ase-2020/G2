@@ -66,7 +66,8 @@ class calWBGT():
                     #WBGTが危険の場合、1を返す
                     return 1
                 else:
-                    self.notified_flag = False
+                    if a <= 25:
+                        self.notified_flag = False
                     """
                     api.Notification_HeatStroke(b,c)
                     """

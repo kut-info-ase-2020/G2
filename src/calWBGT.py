@@ -13,12 +13,12 @@ from SlackAPI import SlackAPI_class
 
 class calWBGT():
     def __init__(self): 
-        api = SlackAPI_class.SlackAPI(
+        self.api = SlackAPI_class.SlackAPI(
             token=os.environ['SLACK_API_TOKEN'], 
             channels = '#zikkenzyou_go'
             )
 
-        notified_flag = False
+        self.notified_flag = False
 
     def calWBGT(self, csv_path):
 
@@ -61,7 +61,7 @@ class calWBGT():
 
                     writer.writerow([datatime, c, b, a])
                 if a > 25 and self.notified_flag == False:
-                    api.Notification_HeatStroke(b,c)
+                    self.api.Notification_HeatStroke(b,c)
                     self.notified_flag = True
                     #WBGTが危険の場合、1を返す
                     return 1

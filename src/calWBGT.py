@@ -40,13 +40,13 @@ class calWBGT():
         while True:
             #ここでセンシングを行う
             countMaxSensing-=1
-            result = read_dht11_dat()
+            result = self.read_dht11_dat()
             if result:
                 #うまくセンサーの値が一回取れた場合
                 countSensing-=1
                 humidity, temperature = result
                 print(humidity)
-                disc_idx = calc_discomfort_index(humidity, temperature)
+                disc_idx = self.calc_discomfort_index(humidity, temperature)
                 dataWBGT.append(disc_idx)
                 datatemperature.append(temperature)
                 datahumidity.append(humidity)

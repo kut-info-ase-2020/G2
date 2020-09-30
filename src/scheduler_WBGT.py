@@ -49,7 +49,7 @@ def timer_loop():
 
 def run_calWBGT(today, current, csv_path, interval, cal_wbgt):
     if today < date.today():
-    # if current + timedelta(minutes=10) < datetime.now():
+    # if current + timedelta(minutes=interval) < datetime.now():
         api = SlackAPI(
             token=os.environ['SLACK_API_TOKEN'], 
             channels = '#zikkenzyou_go'

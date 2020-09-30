@@ -44,8 +44,8 @@ def timer_loop():
             export_csv_name = "data/heatstroke-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
             
 
-        next_time = next_time + timedelta(minutes=interval)
-        # next_time = next_time + timedelta(minutes=1)
+        next_time = next_time + timedelta(minutes=15)
+        # next_time = next_time + timedelta(minutes=interval)
 
 def run_calWBGT(today, current, csv_path, interval, cal_wbgt):
     if today < date.today():

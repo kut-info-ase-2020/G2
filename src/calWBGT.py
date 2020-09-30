@@ -60,14 +60,14 @@ class calWBGT():
                     writer = csv.writer(f)
 
                     writer.writerow([datatime, c, b, a])
-                if a > 25 and self.notified_flag == False:
-                    self.api.Notification_HeatStroke(b,c)
-                    self.notified_flag = True
+                if a > 25:
+                    if self.notified_flag == False:
+                        self.api.Notification_HeatStroke(b,c)
+                        self.notified_flag = True
                     #WBGTが危険の場合、1を返す
                     return 1
                 else:
-                    if a <= 25:
-                        self.notified_flag = False
+                    self.notified_flag = False
                     """
                     api.Notification_HeatStroke(b,c)
                     """

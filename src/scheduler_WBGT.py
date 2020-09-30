@@ -45,7 +45,7 @@ def timer_loop():
             
 
         next_time = next_time + timedelta(minutes=15)
-        # next_time = next_time + timedelta(minutes=interval)
+        # next_time = next_time + timedelta(minutes=1)
 
 def run_calWBGT(today, current, csv_path, interval, cal_wbgt):
     if today < date.today():

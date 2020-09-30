@@ -39,9 +39,7 @@ def timer_loop():
             current = current.replace(microsecond=0) # for test
             today = date.today()
             export_csv_name = "data/heatstroke-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
-            with open(export_csv_name, 'w') as f:
-                writer = csv.writer(f)
-                writer.writerow(['date','Hum','Temp','WBGT'])
+            
 
         next_time = next_time + timedelta(minutes=10)
         # next_time = next_time + timedelta(minutes=1)
@@ -54,6 +52,10 @@ def run_calWBGT(next_time, today, current, csv_path):
             channels = '#zikkenzyou_go'
         )
         api.Visualization_HeatStroke(path=csv_path)
+        csv_path = "data/heatstroke-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
+        with open(csv_path, 'w') as f:
+            writer = csv.writer(f)
+            writer.writerow(['date','Hum','Temp','WBGT'])
     calWBGT.calWBGT(csv_path)
 
 

@@ -42,7 +42,7 @@ def timer_loop():
             current = current.replace(microsecond=0) # for test
             today = date.today()
             export_csv_name = "data/heatstroke-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
-            
+            next_time = current
 
         next_time = next_time + timedelta(minutes=15)
         # next_time = next_time + timedelta(minutes=1)

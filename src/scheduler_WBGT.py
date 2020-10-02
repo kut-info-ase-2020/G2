@@ -55,8 +55,9 @@ def run_calWBGT(today, current, csv_path, interval, cal_wbgt):
             channels = '#zikkenzyou_go'
         )
         api.Visualization_HeatStroke(path=csv_path)
+        today = date.today()
         csv_path = "data/heatstroke-" + str(today.year) + "-" + str(today.month) + "-" + str(today.day) + ".csv"
-        with open(csv_path, 'w') as f:
+        with open(csv_path, 'a') as f:
             writer = csv.writer(f)
             writer.writerow(['date','Hum','Temp','WBGT'])
     cal_wbgt.calWBGT(csv_path)

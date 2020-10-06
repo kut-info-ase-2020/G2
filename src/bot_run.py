@@ -22,7 +22,7 @@ def say_hello(**payload):
     user = data['user']
     print(user)
     if  'subtype' not in data and 'help' in data['text']:
-        res_message =  "Here's how to set up a region for weather information.\nThis service allows you to set up your own region by typing a command.\n\n[set-Placename,{place-name}]\nSet by region name\n{place-name} is Enter a place name like tokyo,kochi\nfor example:Set-Placename,kochi\n\n[set-location,{latitude},{longitude}]\nSet by latitude and longitude\n{latitude}{longitude} is input a number of latitude and longitude\nfor example:Set-Location,30,30\n\n[Change-Mode,{mode-name}]\nChange mode,placemode or location\nPlaceName mode:[Change-mode,PlaceName]\nLocation mode:[Change-mode,Location]\n\n[Check-Mode]:Check Current Mode type"
+        res_message =  "Here's how to set up a region for weather information.\nThis service allows you to set up your own region by typing a command.\n\n[Set-PlaceName,{Place-Name}]\nSet by region name\n{Place-Name} is Enter a place name like tokyo,kochi\nfor example:Set-PlaceName,kochi\n\n[Set-Location,{latitude},{longitude}]\nSet by latitude and longitude\n{latitude}{longitude} is input a number of latitude and longitude\nfor example:Set-Location,30,30\n\n[Change-Mode,{mode-name}]\nChange mode,placemode or location\nPlaceName mode:[Change-mode,PlaceName]\nLocation mode:[Change-mode,Location]\n\n[Check-Mode]:Check Current Mode type\n[Check-Weather]:Check your location's weather"
         try:
             response = web_client.chat_postMessage(
                 channel=channel_id,
@@ -34,7 +34,7 @@ def say_hello(**payload):
             assert e.response["error"]  # str like 'invalid_auth', 'channel_not_found'
             print(f"Got an error: {e.response['error']}")
 
-    elif  'subtype' not in data and 'Set-Placename,' in data['text']:
+    elif  'subtype' not in data and 'Set-PlaceName,' in data['text']:
         s = message.split(',')
         print(s)
         place = s[1]
@@ -121,7 +121,48 @@ def say_hello(**payload):
             assert e.response["ok"] is False
             assert e.response["error"]  # str like 'invalid_auth', 'channel_not_found'
             print(f"Got an error: {e.response['error']}")
+    elif  'subtype' not in data and 'Check-Weather' in data['text']:
+        print("a")
+        #s = message.split(',')
+        #print(s)
+        #mode = s[1]
+        #keido = s[2]
+        #print(mode)
+        mode = weatherAPI.mode
+        print(mode)
+        weather = weatherAPI.get_weather()
+        print(weather)
+        if mode == 0:
+            Place = weatherAPI.place_name
+            weather_result_message="" + Place + "'s Weather is "+ weather + "!"
+        else:
+            location = weatherAPI.get_location()
+            
+            print(location)
+            lon = location
+            #lon = waetherAPI.lon
+            print(lon)
+            #lat = weatherAPI.lat
+            #print(lat)
+            weather_result_message="lon:" + lon + ",lat:"+lat+"  Weather is "+ weather + "!"
+        print(weather_result_message)
+        #weather_result_message = weatherAPI.mode
+        #weather_result_message="Current Mode is PlaceName Mode!"
+        #print(weather_result_message)
+        try:
+            response = web_client.chat_postMessage(
+            channel=channel_id,
+            #text="地域情報を設定しました！",
+            text=weather_result_message,
+            thread_ts=thread_ts
+        )
+        except SlackApiError as e:
+            # You will get a SlackApiError if "ok" is False
+            assert e.response["ok"] is False
+            assert e.response["error"]  # str like 'invalid_auth', 'channel_not_found'
+            print(f"Got an error: {e.response['error']}")
     elif 'B0190A265JA' not in data['bot_id']:
+        print("bomb")
         try:
             response = web_client.chat_postMessage(
                 channel=channel_id,

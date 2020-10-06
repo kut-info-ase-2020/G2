@@ -38,6 +38,15 @@ def say_hello(**payload):
         s = message.split(',')
         print(s)
         place = s[1]
+        if len(s) == 3:
+            jp = s[2]
+            print(place)
+            print(jp)
+            print(type(jp))
+            place = "" + place + ","+ jp + ""
+            
+            print("**************************")
+            print(place)
         print(place)
         weather_result_message = weatherAPI.set_placename(place)
         print(weather_result_message)
@@ -136,15 +145,11 @@ def say_hello(**payload):
             Place = weatherAPI.place_name
             weather_result_message="" + Place + "'s Weather is "+ weather + "!"
         else:
+            print("start")
             location = weatherAPI.get_location()
-            
             print(location)
-            lon = location
-            #lon = waetherAPI.lon
-            print(lon)
-            #lat = weatherAPI.lat
-            #print(lat)
-            weather_result_message="lon:" + lon + ",lat:"+lat+"  Weather is "+ weather + "!"
+            weather_result_message=""+ str(location) + "\nWeather is "+ weather + "!"
+            print("check")
         print(weather_result_message)
         #weather_result_message = weatherAPI.mode
         #weather_result_message="Current Mode is PlaceName Mode!"
@@ -161,7 +166,7 @@ def say_hello(**payload):
             assert e.response["ok"] is False
             assert e.response["error"]  # str like 'invalid_auth', 'channel_not_found'
             print(f"Got an error: {e.response['error']}")
-    elif 'B0190A265JA' not in data['bot_id']:
+    elif 'subtype' not in data and 'B0190A265JA' not in data['user']:
         print("bomb")
         try:
             response = web_client.chat_postMessage(

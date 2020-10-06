@@ -1,1 +1,1 @@
-{"mode": 1, "place_name": "kochi", "location": {"longitude": 133, "latitude": 33}, "part": "minutely", "units": "metric", "API_KEY": "e598d75c1e5300d6c6aed1bee1f7ce88"}
+{"mode": 0, "place_name": "Kochi,JP", "location": {"longitude": 133, "latitude": 33}, "part": "minutely", "units": "metric", "API_KEY": "e598d75c1e5300d6c6aed1bee1f7ce88"}

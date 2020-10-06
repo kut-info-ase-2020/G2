@@ -10,6 +10,7 @@ sched, datetime, matplotlib, SlackClient, json, requests
 以下の起動コマンドはカレントディレクトリをsrcディレクトリとした場合の記述である  
 またSlackとの連携にはSlack Appの登録と`bot`、`channels:history`、`chat:write:bot`の3つのスコープを持ったAPI keyが必要となる。
 
+___  
 
 ### Sitting time management
 連続して座った時間を計測し、基準の時間を超えるとSlackで警告を出すシステム  
@@ -22,6 +23,8 @@ SlackAPI/SlackAPI_class.py　警告とグラフの出力
 
 #### 起動コマンド
 `python3 -m sitting_time_sensor/sitting_time_system`
+
+___  
 
 ### Weather-wise ventilation management
 連続して換気されていない時間を計測し、基準の時間を超えるとSlackで警告を出すシステム  
@@ -36,21 +39,25 @@ SlackAPI/SlackAPI_class.py　警告とグラフの出力
 #### 起動コマンド
 `python3 -m ventilation_sensor/ventilation_system`
 
+___  
+
 ### Heatstroke risk forecast
 部屋の気温・湿度から求める熱中症の危険度を示すWBGTが基準値を超えるとSlackで警告を出すシステム  
 また、日付が変わると１日の気温、湿度、WBGTの遷移を表すグラフをSlackに出力する
 
 #### 主な利用ファイル
-calWBGT.py WBGTの計測と記録
+calWBGT.py WBGTの計測と記録  
 scheduler_WBGT.py システムの呼び出しとスケジューリング
 
 #### 起動コマンド
 `python3 scheduler_WBGT.py`
 
+___  
+
 ### Slack BOT
 Slack内で警告やチャットでの設定変更などを行うシステム  
-Real Time Messaging APIを利用している為、このサイト(https://api.slack.com/rtm)で紹介される古いバージョンの権限を持ったAPI keyが必要
-また位置情報として利用可能な地名はOpen Weather Map(https://openweathermap.org/)で登録された地名を用いる
+Real Time Messaging APIを利用している為、このサイト( https://api.slack.com/rtm )で紹介される古いバージョンの権限を持ったAPI keyが必要
+また位置情報として利用可能な地名はOpen Weather Map( https://openweathermap.org/ )で登録された地名を用いる
 
 #### 主な利用ファイル
 bot_run.py　Botの起動

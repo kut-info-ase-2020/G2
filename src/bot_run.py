@@ -22,7 +22,7 @@ def say_hello(**payload):
     user = data['user']
     print(user)
     if  'subtype' not in data and 'help' in data['text']:
-        res_message =  "Here's how to set up a region for weather information.\nThis service allows you to set up your own region by typing a command.\n\n[Set-PlaceName,{Place-Name}]\nSet by region name\n{Place-Name} is Enter a place name like tokyo,kochi\nfor example:Set-PlaceName,kochi\n\n[Set-Location,{latitude},{longitude}]\nSet by latitude and longitude\n{latitude}{longitude} is input a number of latitude and longitude\nfor example:Set-Location,30,30\n\n[Change-Mode,{mode-name}]\nChange mode,placemode or location\nPlaceName mode:[Change-mode,PlaceName]\nLocation mode:[Change-mode,Location]\n\n[Check-Mode]:Check Current Mode type\n[Check-Weather]:Check your location's weather"
+        res_message =  "Here's how to set up a region for weather information.\nThis service allows you to set up your own region by typing a command.\n\n・[Set-PlaceName,{Place-Name},{Country}]\nSet by region name\n{Place-Name} is Enter a place name like tokyo,kochi\nfor example:Set-PlaceName,kochi,jp\n\n・[Set-Location,{latitude},{longitude}]\nSet by latitude and longitude\n{latitude}{longitude} is input a number of latitude and longitude\nfor example:Set-Location,30,30\n\n・[Change-Mode,{mode-name}]\nChange mode,placemode or location\nPlaceName mode:[Change-mode,PlaceName]\nLocation mode:[Change-mode,Location]\n\n・[Check-Mode]:Check Current Mode type\n・[Check-Weather]:Check your location's weather"
         try:
             response = web_client.chat_postMessage(
                 channel=channel_id,

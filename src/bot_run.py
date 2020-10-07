@@ -166,7 +166,7 @@ def say_hello(**payload):
             assert e.response["ok"] is False
             assert e.response["error"]  # str like 'invalid_auth', 'channel_not_found'
             print(f"Got an error: {e.response['error']}")
-    elif 'subtype' not in data and 'B0190A265JA' not in data['user']:
+    elif 'subtype' not in data and 'U019KLJGLRF' not in data['user']:
         print("bomb")
         try:
             response = web_client.chat_postMessage(
